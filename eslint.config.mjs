@@ -4,6 +4,7 @@ import tseslint from "typescript-eslint";
 import pluginRouter from "@tanstack/eslint-plugin-router";
 import reactHooks from "eslint-plugin-react-hooks";
 import react from "eslint-plugin-react";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 
 export default defineConfig([
   eslint.configs.recommended,
@@ -12,6 +13,7 @@ export default defineConfig([
   reactHooks.configs.flat.recommended,
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
+  ...pluginQuery.configs["flat/recommended"],
   {
     settings: {
       react: { version: "detect" },
@@ -41,5 +43,12 @@ export default defineConfig([
       ],
     },
   },
-  { ignores: ["temp.js", "config/*", "eslint.config.mjs"] },
+  {
+    ignores: [
+      "temp.js",
+      "config/*",
+      "eslint.config.mjs",
+      "**/routeTree.gen.ts",
+    ],
+  },
 ]);

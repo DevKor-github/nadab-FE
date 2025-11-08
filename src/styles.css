@@ -1,18 +1,5 @@
 @import "tailwindcss";
-/* 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-} */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   button {
@@ -22,4 +9,50 @@ code {
   button:disabled {
     cursor: default;
   }
+}
+
+@theme {
+  /* border */
+  --color-border-base: #e8eef2; /* neutral/200 */
+  --color-border-layer-1: #bbc5cc; /* neutral/300 */
+  --color-border-layer-2: #a4adb2; /* neutral/400 */
+  --color-border-layer-3: #8c9499; /* neutral/500 */
+  --color-border-muted: #f2f8fc; /* neutral/100 */
+  --color-border-inverse: #2f3133; /* neutral/900 */
+  --color-border-transparent: rgba(0, 0, 0, 0);
+  --color-border-alpha: rgba(0, 0, 0, 0.1);
+  --color-border-alpha-inverse: rgba(255, 255, 255, 0.1);
+  /* feedback */
+  --color-feedback-success-fg: #16a34a;
+  --color-feedback-warning-fg: #d1b400;
+  --color-feedback-error-fg: #ef4444;
+  --color-feedback-info-fg: #0683ff;
+
+  --color-feedback-success-bg: #bbf7d1;
+  --color-feedback-warning-bg: #feffc1;
+  --color-feedback-error-bg: #fee2e2;
+  --color-feedback-info-bg: #d6f0ff;
+}
+
+.dark {
+  /* border */
+  --color-border-base: #2f3133; /* neutral/900 */
+  --color-border-layer-1: #464a4d; /* neutral/800 */
+  --color-border-layer-2: #5e6366; /* neutral/700 */
+  --color-border-layer-3: #757b80; /* neutral/600 */
+  --color-border-muted: #17191a; /* neutral/1000 */
+  --color-border-inverse: #e8eef2; /* neutral/200 */
+  --color-border-transparent: rgba(0, 0, 0, 0);
+  --color-border-alpha: rgba(255, 255, 255, 0.1); /* light10 */
+  --color-border-alpha-inverse: rgba(0, 0, 0, 0.1); /* dark10 */
+  /* feedback */
+  --color-feedback-success-fg: #16a34a;
+  --color-feedback-warning-fg: #d1b400;
+  --color-feedback-error-fg: #ef4444;
+  --color-feedback-info-fg: #0683ff;
+
+  --color-feedback-success-bg: #bbf7d1;
+  --color-feedback-warning-bg: #feffc1;
+  --color-feedback-error-bg: #fee2e2;
+  --color-feedback-info-bg: #d6f0ff;
 }

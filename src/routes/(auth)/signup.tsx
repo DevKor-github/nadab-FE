@@ -4,6 +4,7 @@ import { z } from "zod";
 import { motion, AnimatePresence } from "motion/react";
 
 import Terms from "@/features/auth/Terms";
+import Email from "@/features/auth/Email";
 
 const sighupStepSchema = z.object({
   step: z
@@ -25,7 +26,7 @@ function RouteComponent() {
       content = <Terms />;
       break;
     case "email":
-      content = <div>Email</div>;
+      content = <Email />;
       break;
     default:
       content = <div>Error</div>;

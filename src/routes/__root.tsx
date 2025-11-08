@@ -10,7 +10,7 @@ function RootComponent() {
   return (
     <>
       <div className="min-h-dvh w-vw bg-amber-100 flex">
-        <div className="w-dvw sm:w-[412px] sm:mx-auto px-[6.25vw] sm:px-4 bg-white">
+        <div className="w-dvw sm:w-[412px] sm:mx-auto px-[6.25vw] sm:px-4 bg-white overflow-x-hidden">
           <Outlet />
         </div>
       </div>

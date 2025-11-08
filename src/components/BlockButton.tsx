@@ -19,9 +19,9 @@ export default function BlockButton({
       className={clsx(
         "w-full flex justify-center items-center",
         {
-          "bg-blue-200 hover:bg-blue-300": variant === "primary",
+          "bg-blue-200 hover:bg-blue-300": variant === "primary" && !disabled,
         },
-        disabled && "bg-blue-100"
+        disabled && "bg-blue-100 hover:bg-blue-100"
       )}
       {...props}
     >

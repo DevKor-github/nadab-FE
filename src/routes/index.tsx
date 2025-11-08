@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
+import useSignupStore from "@/store/signupStore";
 
 export const Route = createFileRoute("/")({
   component: App,
 });
 
 function App() {
+  const reset = useSignupStore.use.reset();
   return (
     <div className="App">
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, i) => (
@@ -16,7 +18,7 @@ function App() {
           dolore.
         </div>
       ))}
-      <Link to="/login" className="bg-blue-200">
+      <Link to="/login" className="bg-blue-200" onClick={reset}>
         이메일로 로그인
       </Link>
       <Link to="/signup" className="bg-orange-200">

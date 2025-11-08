@@ -1,10 +1,9 @@
-import { Link } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import { zodValidator } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { motion, AnimatePresence } from "motion/react";
-import BlockButton from "@/components/BlockButton";
-import Terms from "@/features/auth/terms";
+
+import Terms from "@/features/auth/Terms";
 
 const sighupStepSchema = z.object({
   step: z
@@ -42,9 +41,6 @@ function RouteComponent() {
         className="w-full h-full bg-blue-50"
       >
         {content}
-        <Link to="/signup" search={{ step: "email" }}>
-          <BlockButton>완료</BlockButton>
-        </Link>
       </motion.div>
     </AnimatePresence>
   );

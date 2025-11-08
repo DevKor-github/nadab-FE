@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import "../App.css";
 
 export const Route = createFileRoute("/")({
   component: App,

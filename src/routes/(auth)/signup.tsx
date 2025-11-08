@@ -1,7 +1,9 @@
+import { Link } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import { zodValidator } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { motion, AnimatePresence } from "motion/react";
+import BlockButton from "@/components/BlockButton";
 import Terms from "@/features/auth/terms";
 
 const sighupStepSchema = z.object({
@@ -30,7 +32,7 @@ function RouteComponent() {
       content = <div>Error</div>;
   }
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={step}
         initial={{ x: 150, opacity: 0 }}
@@ -40,6 +42,9 @@ function RouteComponent() {
         className="w-full h-full bg-blue-50"
       >
         {content}
+        <Link to="/signup" search={{ step: "email" }}>
+          <BlockButton>완료</BlockButton>
+        </Link>
       </motion.div>
     </AnimatePresence>
   );

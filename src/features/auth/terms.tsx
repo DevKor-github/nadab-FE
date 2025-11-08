@@ -1,5 +1,3 @@
-import { Link } from "@tanstack/react-router";
-
 export default function Terms() {
   return (
     <div>
@@ -8,9 +6,6 @@ export default function Terms() {
         <input type="checkbox" name="terms" id="terms" />
         <label htmlFor="terms">서비스 이용약관에 동의해요.(필수)</label>
       </form>
-      <Link to="/signup" search={{ step: "email" }}>
-        다음
-      </Link>
     </div>
   );
 }

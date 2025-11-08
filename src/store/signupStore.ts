@@ -23,7 +23,7 @@ type Action = {
 
 const useSignupStoreBase = create<State & Action>()(
   persist(
-    (set, get, store) => ({
+    (set, _get, store) => ({
       isTermsAgreed: false,
       email: "",
       isEmailVerified: false,

@@ -1,14 +1,14 @@
-import BlockButton from "@/components/BlockButton";
-import { Link } from "@tanstack/react-router";
-import useSignupStore from "@/store/signupStore";
+// import BlockButton from "@/components/BlockButton";
+// import { Link } from "@tanstack/react-router";
+// import useSignupStore from "@/store/signupStore";
 import { useState, useRef } from "react";
 import type { ChangeEvent, KeyboardEvent } from "react";
 import InputField from "@/components/InputField";
 
 export default function EmailVerification() {
-  const updateIsEmailVerified = useSignupStore.use.updateIsEmailVerified();
+  // const updateIsEmailVerified = useSignupStore.use.updateIsEmailVerified();
   const [code, setCode] = useState(["", "", "", ""]);
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>, idx: number) {
@@ -56,11 +56,11 @@ export default function EmailVerification() {
             onKeyDown={(e) => handleBack(e, idx)}
             value={digit}
             type="number"
-            error={error}
+            // error={error}
           />
         ))}
       </form>
-      {!error ? (
+      {/* {!error ? (
         <Link
           to="/signup"
           search={{ step: "password" }}
@@ -70,7 +70,7 @@ export default function EmailVerification() {
         </Link>
       ) : (
         <BlockButton disabled>완료</BlockButton>
-      )}
+      )} */}
     </div>
   );
 }

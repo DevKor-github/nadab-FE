@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import useSignupStore from "@/store/signupStore";
-import type { ButtonHTMLAttributes } from "react";
 import BlockButton from "@/components/BlockButton";
 import { NaverIcon, GoogleIcon, RoundEmailIcon } from "@/components/Icons";
 
@@ -38,10 +37,31 @@ export function LandingPage() {
       <div className="flex-1 w-full flex flex-col justify-center">
         <div className="flex flex-col gap-margin-y-l">
           <div className="flex flex-col gap-margin-y-m">
-            <LoginButton icon={NaverIcon}>네이버로 로그인</LoginButton>
-            <LoginButton icon={GoogleIcon}>구글로 로그인</LoginButton>
+            <BlockButton variant="tertiary">
+              <div>
+                <span className="absolute left-4">
+                  <NaverIcon />
+                </span>
+                <span>네이버로 로그인</span>
+              </div>
+            </BlockButton>
+            <BlockButton variant="tertiary">
+              <div>
+                <span className="absolute left-4">
+                  <GoogleIcon />
+                </span>
+                <span>구글로 로그인</span>
+              </div>
+            </BlockButton>
             <Link to="/login" onClick={reset}>
-              <LoginButton icon={RoundEmailIcon}>메일로 로그인</LoginButton>
+              <BlockButton variant="tertiary">
+                <div>
+                  <span className="absolute left-4">
+                    <RoundEmailIcon />
+                  </span>
+                  <span>메일로 로그인</span>
+                </div>
+              </BlockButton>
             </Link>
           </div>
           <div className="flex items-center gap-5">
@@ -59,26 +79,5 @@ export function LandingPage() {
         </div>
       </div>
     </div>
-  );
-}
-
-type Props = {
-  icon: React.ElementType;
-  children: React.ReactNode;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
-
-// 왜 기본 버튼 컴포넌트 안 쓴거지
-// Todo: 기본 버튼 컴포넌트로 변경
-function LoginButton({ icon: Icon, children, ...props }: Props) {
-  return (
-    <button
-      {...props}
-      className="relative w-full rounded-xl py-padding-y-m text-center border border-border-layer-1 hover:border-button-tertiary-border-hover text-text-primary bg-field-bg-default hover:bg-button-tertiary-bg-hover text-button-1"
-    >
-      <span className="absolute left-4">
-        <Icon />
-      </span>
-      {children}
-    </button>
   );
 }

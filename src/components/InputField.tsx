@@ -36,7 +36,6 @@ export default function InputField({
           },
           error && "text-feedback-error-fg border-feedback-error-fg"
         )}
-        {...props}
       />
       {error && <p className="text-feedback-error-fg">{error}</p>}
     </div>

@@ -1,25 +1,28 @@
 // input type, name 넘겨줘야 함
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, Ref } from "react";
 import clsx from "clsx";
 
 type Props = {
   variant?: "basic";
-  id: string;
+  id?: string;
   label?: string;
   error?: string;
+  ref?: Ref<HTMLInputElement>;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export default function InputField({
   variant = "basic",
   id,
-  label = "",
-  error = "",
+  label,
+  error,
+  ref,
   ...props
 }: Props) {
   return (
     <div>
       {label && <label htmlFor={id}>{label}</label>}
       <input
+        ref={ref}
         id={id}
         {...props}
         className={clsx(

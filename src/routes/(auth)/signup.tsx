@@ -5,10 +5,20 @@ import { motion, AnimatePresence } from "motion/react";
 
 import Terms from "@/features/auth/Terms";
 import Email from "@/features/auth/Email";
+import Password from "@/features/auth/Password";
+import EmailVerification from "@/features/auth/EmailVerification";
 
 const sighupStepSchema = z.object({
   step: z
-    .enum(["terms", "email", "password", "onboarding", "category", "nickname"])
+    .enum([
+      "terms",
+      "email",
+      "emailVerification",
+      "password",
+      "onboarding",
+      "category",
+      "nickname",
+    ])
     .optional()
     .default("terms"),
 });
@@ -28,6 +38,15 @@ function RouteComponent() {
     case "email":
       content = <Email />;
       break;
+    case "emailVerification":
+      content = <EmailVerification />;
+      break;
+    case "password":
+      content = <Password />;
+      break;
+    case "onboarding":
+    case "category":
+    case "nickname":
     default:
       content = <div>Error</div>;
   }

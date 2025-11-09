@@ -6,7 +6,7 @@ import { UserSchema } from "@/features/user/userSchema";
 import { useDebouncedCallback } from "use-debounce";
 import InputField from "@/components/InputField";
 
-export default function Email() {
+export default function Password() {
   const updateEmail = useSignupStore.use.updateEmail();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -36,16 +36,14 @@ export default function Email() {
             validateEmail(e.target.value);
           }}
           value={email}
-          placeholder="example@domain.com"
           type="email"
           error={emailError}
         />
       </form>
-      {/* 넘어가기 전에 추가적으로 중복 확인 api 호출 필요!! */}
       {!emailError ? (
         <Link
           to="/signup"
-          search={{ step: "emailVerification" }}
+          search={{ step: "password" }}
           onClick={() => updateEmail(email)}
         >
           <BlockButton>완료</BlockButton>

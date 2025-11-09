@@ -17,11 +17,13 @@ export default function BlockButton({
     <button
       disabled={disabled}
       className={clsx(
-        "w-full flex justify-center items-center",
+        "w-full text-center rounded-lg py-padding-y-m",
         {
-          "bg-blue-200 hover:bg-blue-300": variant === "primary" && !disabled,
+          "bg-button-primary-bg-default hover:bg-button-primary-bg-hover text-button-primary-text-default":
+            variant === "primary" && !disabled,
         },
-        disabled && "bg-blue-100 hover:bg-blue-100"
+        disabled &&
+          "bg-button-disabled-bg-default text-button-disabled-text-default"
       )}
       {...props}
     >

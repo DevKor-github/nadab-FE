@@ -1,29 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
-import useSignupStore from "@/store/signupStore";
+import { LandingPage } from "@/features/LandingPage";
 
 export const Route = createFileRoute("/")({
-  component: App,
+  component: LandingPage,
 });
-
-function App() {
-  const reset = useSignupStore.use.reset();
-  return (
-    <div className="App">
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, i) => (
-        <div key={i}>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore,
-          iure. Animi tempora nobis quod magnam in est ducimus illo deleniti,
-          quia veniam, quibusdam labore nulla culpa eaque et? Voluptatibus,
-          dolore.
-        </div>
-      ))}
-      <Link to="/login" className="bg-blue-200 text-hero" onClick={reset}>
-        이메일로 로그인
-      </Link>
-      <Link to="/signup" className="bg-orange-200 text-button-1">
-        회원가입
-      </Link>
-    </div>
-  );
-}

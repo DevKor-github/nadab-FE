@@ -17,7 +17,7 @@ export default function BlockButton({
     <button
       disabled={disabled}
       className={clsx(
-        "w-full text-center rounded-lg py-padding-y-m",
+        "w-full text-center text-button-1 rounded-lg py-padding-y-m",
         {
           "bg-button-primary-bg-default hover:bg-button-primary-bg-hover text-button-primary-text-default":
             variant === "primary" && !disabled,

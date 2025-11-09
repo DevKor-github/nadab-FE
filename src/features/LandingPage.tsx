@@ -68,6 +68,7 @@ type Props = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 // 왜 기본 버튼 컴포넌트 안 쓴거지
+// Todo: 기본 버튼 컴포넌트로 변경
 function LoginButton({ icon: Icon, children, ...props }: Props) {
   return (
     <button

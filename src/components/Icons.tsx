@@ -65,3 +65,28 @@ export function RoundEmailIcon() {
     </svg>
   );
 }
+
+export function ArrowLeftIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M5.06055 10.7803H20.0605V12.2803H5.06055V10.7803Z"
+        fill="#3D3C3C"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.12132 11.5303L12.591 5.06066L11.5303 4L4 11.5303L11.5303 19.0607L12.591 18L6.12132 11.5303Z"
+        fill="#3D3C3C"
+      />
+    </svg>
+  );
+}

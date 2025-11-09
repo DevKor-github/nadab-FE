@@ -233,6 +233,67 @@
     calc(160px * 1.2)
   );
 
+  /* gap */
+  /* spacing-1 */
+  --spacing-gap-x-xs: clamp(
+    calc(4px * 0.8),
+    calc((4 / 390) * 100vw),
+    calc(4px * 1.2)
+  );
+  --spacing-gap-y-xs: clamp(
+    calc(4px * 0.8),
+    calc((4 / 796) * 100dvh),
+    calc(4px * 1.2)
+  );
+
+  /* spacing-2 */
+  --spacing-gap-x-s: clamp(
+    calc(8px * 0.8),
+    calc((8 / 390) * 100vw),
+    calc(8px * 1.2)
+  );
+  --spacing-gap-y-s: clamp(
+    calc(8px * 0.8),
+    calc((8 / 796) * 100dvh),
+    calc(8px * 1.2)
+  );
+
+  /* spacing-4 */
+  --spacing-gap-x-m: clamp(
+    calc(16px * 0.8),
+    calc((16 / 390) * 100vw),
+    calc(16px * 1.2)
+  );
+  --spacing-gap-y-m: clamp(
+    calc(16px * 0.8),
+    calc((16 / 796) * 100dvh),
+    calc(16px * 1.2)
+  );
+
+  /* spacing-6 */
+  --spacing-gap-x-l: clamp(
+    calc(24px * 0.8),
+    calc((24 / 390) * 100vw),
+    calc(24px * 1.2)
+  );
+  --spacing-gap-y-l: clamp(
+    calc(24px * 0.8),
+    calc((24 / 796) * 100dvh),
+    calc(24px * 1.2)
+  );
+
+  /* spacing-10 */
+  --spacing-gap-x-xl: clamp(
+    calc(40px * 0.8),
+    calc((40 / 390) * 100vw),
+    calc(40px * 1.2)
+  );
+  --spacing-gap-y-xl: clamp(
+    calc(40px * 0.8),
+    calc((40 / 796) * 100dvh),
+    calc(40px * 1.2)
+  );
+
   /* padding */
   /* spacing-1 */
   --spacing-padding-x-xxs: clamp(
@@ -317,6 +378,19 @@
     calc((48 / 796) * 100dvh),
     calc(48px * 1.2)
   );
+
+  /* brand color */
+  --color-brand-primary: #6866ff;
+  --color-brand-secondary: #ffa9f3;
+  --color-brand-primary-alpha-90: rgba(104, 102, 255, 0.9);
+  --color-brand-primary-alpha-80: rgba(104, 102, 255, 0.8);
+  --color-brand-primary-alpha-70: rgba(104, 102, 255, 0.7);
+  --color-brand-primary-alpha-60: rgba(104, 102, 255, 0.6);
+  --color-brand-primary-alpha-50: rgba(104, 102, 255, 0.5);
+  --color-brand-primary-alpha-40: rgba(104, 102, 255, 0.4);
+  --color-brand-primary-alpha-30: rgba(104, 102, 255, 0.3);
+  --color-brand-primary-alpha-20: rgba(104, 102, 255, 0.2);
+  --color-brand-primary-alpha-10: rgba(104, 102, 255, 0.1);
 
   /* border */
   --color-border-base: #e8eef2; /* neutral/200 */
@@ -414,9 +488,28 @@
   --color-field-bg-warning: #ffefc1; /* feedback/warning-bg */
   --color-field-bg-error: #fee2e2; /* feedback/error-bg */
   --color-field-bg-info: #d6f0ff; /* feedback/info-bg */
+
+  /* shadow */
+  --shadow-1: 0px 2px 4px 0 rgba(0, 0, 0, 0.1);
+  --shadow-2: 0px 4px 12px 0 rgba(0, 0, 0, 0.1);
+  --shadow-3: 0px 8px 24px 0 rgba(0, 0, 0, 0.1);
+  --shadow-4: 0px 12px 48px 0 rgba(0, 0, 0, 0.1);
 }
 
 .dark {
+  /* brand color */
+  --color-brand-primary: #6866ff;
+  --color-brand-secondary: #ffa9f3;
+  --color-brand-primary-alpha-90: rgba(104, 102, 255, 0.9);
+  --color-brand-primary-alpha-80: rgba(104, 102, 255, 0.8);
+  --color-brand-primary-alpha-70: rgba(104, 102, 255, 0.7);
+  --color-brand-primary-alpha-60: rgba(104, 102, 255, 0.6);
+  --color-brand-primary-alpha-50: rgba(104, 102, 255, 0.5);
+  --color-brand-primary-alpha-40: rgba(104, 102, 255, 0.4);
+  --color-brand-primary-alpha-30: rgba(104, 102, 255, 0.3);
+  --color-brand-primary-alpha-20: rgba(104, 102, 255, 0.2);
+  --color-brand-primary-alpha-10: rgba(104, 102, 255, 0.1);
+
   /* border */
   --color-border-base: #2f3133; /* neutral/900 */
   --color-border-layer-1: #464a4d; /* neutral/800 */

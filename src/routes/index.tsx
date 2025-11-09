@@ -18,10 +18,10 @@ function App() {
           dolore.
         </div>
       ))}
-      <Link to="/login" className="bg-blue-200" onClick={reset}>
+      <Link to="/login" className="bg-blue-200 text-hero" onClick={reset}>
         이메일로 로그인
       </Link>
-      <Link to="/signup" className="bg-orange-200">
+      <Link to="/signup" className="bg-orange-200 text-button-1">
         회원가입
       </Link>
     </div>

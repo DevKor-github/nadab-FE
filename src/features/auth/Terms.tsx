@@ -3,6 +3,10 @@ import { Link } from "@tanstack/react-router";
 import useSignupStore from "@/store/signupStore";
 import clsx from "clsx";
 import { useState } from "react";
+import {
+  AgreementCheckboxIcon,
+  SelectAllCheckboxIcon,
+} from "@/components/Icons";
 
 export default function Terms() {
   const initialItems = [
@@ -46,10 +50,9 @@ export default function Terms() {
   });
   const updateIsTermsAgreed = useSignupStore.use.updateIsTermsAgreed();
   return (
-    <div>
-      <h1>서비스 이용약관에 동의해 주세요</h1>
+    <div className="p-padding-y-m flex flex-col gap-margin-y-m">
       <button
-        className="flex gap-2"
+        className="flex items-center gap-padding-x-xs text-button-1 text-text-primary px-padding-x-s py-padding-y-s border border-border-base rounded-lg"
         onClick={() => {
           setItems((prev) =>
             prev.map((item) => ({ ...item, isAgreed: !isAllAgreed }))
@@ -58,42 +61,42 @@ export default function Terms() {
       >
         <span
           className={clsx({
-            "text-gray-400": !isAllAgreed,
-            "text-black": isAllAgreed,
+            "text-icon-disabled": !isAllAgreed,
+            "text-icon-primary": isAllAgreed,
           })}
         >
-          V
+          <SelectAllCheckboxIcon />
         </span>
         <p>약관 모두 동의하기</p>
       </button>
-      <ul>
+      <ul className="flex flex-col gap-padding-y-xs">
         {items.map((item, idx) => {
           return (
             <li
-              className="cursor-pointer flex gap-2"
+              className={clsx("cursor-pointer flex gap-margin-x-s", {
+                "text-text-disabled": !item.isAgreed,
+                "text-text-primary": item.isAgreed,
+              })}
               key={idx}
               onClick={() => {
                 setItems((prev) =>
-                  prev.map((item, i) => {
+                  prev.map((innerItem, i) => {
                     if (idx === i) {
-                      return { ...item, isAgreed: !item.isAgreed };
+                      return { ...innerItem, isAgreed: !innerItem.isAgreed };
                     } else {
-                      return item;
+                      return innerItem;
                     }
                   })
                 );
               }}
             >
-              <button
-                className={clsx({
-                  "text-gray-400": !item.isAgreed,
-                  "text-black": item.isAgreed,
-                })}
-              >
-                V
+              <button className="flex items-center px-padding-x-xs py-padding-y-xs">
+                <AgreementCheckboxIcon />
               </button>
-              <p>{item.isRequired === true ? "필수" : "선택"}</p>
-              <p>{item.title}</p>
+              <p className="text-label-l">
+                {item.isRequired === true ? "필수" : "선택"}
+              </p>
+              <p className="text-caption-l">{item.title}</p>
             </li>
           );
         })}

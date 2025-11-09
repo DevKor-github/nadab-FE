@@ -90,3 +90,40 @@ export function ArrowLeftIcon() {
     </svg>
   );
 }
+
+export function SelectAllCheckboxIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g opacity="0.6">
+        <path
+          d="M9.99967 0.833252C4.94551 0.833252 0.833008 4.94575 0.833008 9.99992C0.833008 15.0541 4.94551 19.1666 9.99967 19.1666C15.0538 19.1666 19.1663 15.0541 19.1663 9.99992C19.1663 4.94575 15.0538 0.833252 9.99967 0.833252ZM8.59051 13.9591L5.23967 10.5616L6.42634 9.39158L8.59967 11.5958L13.578 6.63159L14.7547 7.81158L8.59051 13.9591Z"
+          fill="currentColor"
+        />
+      </g>
+    </svg>
+  );
+}
+export function AgreementCheckboxIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.92508 12.8895L15.8367 5L16.7194 5.88512L7.91764 14.6622L3.33301 10.0131L4.22305 9.13538L7.92508 12.8895Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}

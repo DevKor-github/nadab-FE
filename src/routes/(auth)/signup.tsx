@@ -63,6 +63,7 @@ function RouteComponent() {
       content = <div>Error</div>;
   }
   return (
+    // Todo: 뒤로가기 시에는 애니메이션 반대로 줘야 함
     <div>
       <SubHeader>{headerTitle}</SubHeader>
       <AnimatePresence mode="wait" initial={false}>

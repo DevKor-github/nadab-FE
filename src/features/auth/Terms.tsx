@@ -5,37 +5,36 @@ import clsx from "clsx";
 import { useState } from "react";
 import {
   AgreementCheckboxIcon,
+  AgreementChevronIcon,
   SelectAllCheckboxIcon,
 } from "@/components/Icons";
 
+// Todo: 색깔 디자인 토큰 적용
 export default function Terms() {
+  // Todo: 약관 링크 변경
   const initialItems = [
     {
-      id: 0,
       isRequired: true,
       title: "서비스 이용약관에 동의해요.",
-      url: "",
+      url: "https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96",
       isAgreed: false,
     },
     {
-      id: 1,
       isRequired: true,
       title: "개인정보 처리 방침에 동의해요.",
-      url: "",
+      url: "https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96",
       isAgreed: false,
     },
     {
-      id: 2,
       isRequired: true,
       title: "만 14세 이상이에요.",
-      url: "",
+      url: "https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96",
       isAgreed: false,
     },
     {
-      id: 3,
       isRequired: false,
       title: "마케팅 정보 수신에 동의해요.",
-      url: "",
+      url: "https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96",
       isAgreed: false,
     },
   ];
@@ -50,7 +49,7 @@ export default function Terms() {
   });
   const updateIsTermsAgreed = useSignupStore.use.updateIsTermsAgreed();
   return (
-    <div className="p-padding-y-m flex flex-col gap-margin-y-m">
+    <div className="py-padding-y-m flex flex-col gap-margin-y-m">
       <button
         className="flex items-center gap-padding-x-xs text-button-1 text-text-primary px-padding-x-s py-padding-y-s border border-border-base rounded-lg"
         onClick={() => {
@@ -72,12 +71,13 @@ export default function Terms() {
       <ul className="flex flex-col gap-padding-y-xs">
         {items.map((item, idx) => {
           return (
+            // <Link to={item.url} key={idx}>
             <li
+              key={idx}
               className={clsx("cursor-pointer flex gap-margin-x-s", {
                 "text-text-disabled": !item.isAgreed,
                 "text-text-primary": item.isAgreed,
               })}
-              key={idx}
               onClick={() => {
                 setItems((prev) =>
                   prev.map((innerItem, i) => {
@@ -93,11 +93,15 @@ export default function Terms() {
               <button className="flex items-center px-padding-x-xs py-padding-y-xs">
                 <AgreementCheckboxIcon />
               </button>
-              <p className="text-label-l">
+              <span className="text-label-l">
                 {item.isRequired === true ? "필수" : "선택"}
-              </p>
+              </span>
               <p className="text-caption-l">{item.title}</p>
+              <span className="ml-auto">
+                <AgreementChevronIcon />
+              </span>
             </li>
+            // </Link>
           );
         })}
       </ul>
@@ -110,7 +114,17 @@ export default function Terms() {
           <BlockButton>완료</BlockButton>
         </Link>
       ) : (
-        <BlockButton disabled>완료</BlockButton>
+        <>
+          <BlockButton disabled>완료</BlockButton>
+          {/* eslint-disable react/no-unescaped-entities */}
+          <p className="text-label-s text-center text-text-tertiary">
+            '선택' 항목에 동의하지 않아도 서비스 이용이 가능합니다.
+            <br />
+            개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있으며,
+            <br />
+            동의 거부시 회원체 서비스 이용이 제한됩니다.
+          </p>
+        </>
       )}
     </div>
   );

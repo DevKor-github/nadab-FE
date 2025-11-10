@@ -1,15 +1,16 @@
 import BlockButton from "@/components/BlockButton";
-import { Link } from "@tanstack/react-router";
 import useSignupStore from "@/store/signupStore";
 import { useState } from "react";
 import { UserSchema } from "@/features/user/userSchema";
 import { useDebouncedCallback } from "use-debounce";
 import InputField from "@/components/InputField";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function Email() {
   const updateEmail = useSignupStore.use.updateEmail();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  const navigate = useNavigate();
 
   // 입력 후 일정 시간이 지나고 검증
   const validateEmail = useDebouncedCallback((value: string) => {
@@ -23,9 +24,23 @@ export default function Email() {
   }, 300);
 
   return (
-    <div>
-      <h1>이메일 인증을 해주세요.</h1>
-      <form action="">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!emailError) {
+          // Todo: 중복 확인 api 호출 + 로딩 상태 UI 반영
+          navigate({
+            to: "/signup",
+            search: {
+              step: "emailVerification",
+            },
+          });
+        } else {
+          updateEmail(email);
+        }
+      }}
+    >
+      <div className="my-margin-y-m">
         <InputField
           label="이메일 주소"
           id="email"
@@ -36,23 +51,14 @@ export default function Email() {
             validateEmail(e.target.value);
           }}
           value={email}
-          placeholder="example@domain.com"
+          placeholder="이메일을 입력해주세요."
           type="email"
           error={emailError}
         />
-      </form>
-      {/* 넘어가기 전에 추가적으로 중복 확인 api 호출 필요!! */}
-      {!emailError ? (
-        <Link
-          to="/signup"
-          search={{ step: "emailVerification" }}
-          onClick={() => updateEmail(email)}
-        >
-          <BlockButton>완료</BlockButton>
-        </Link>
-      ) : (
-        <BlockButton disabled>완료</BlockButton>
-      )}
-    </div>
+      </div>
+      <div className="my-margin-y-s">
+        <BlockButton disabled={!!emailError}>완료</BlockButton>
+      </div>
+    </form>
   );
 }

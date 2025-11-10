@@ -127,3 +127,22 @@ export function AgreementCheckboxIcon() {
     </svg>
   );
 }
+
+export function AgreementChevronIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.5499 4.16675L12.9918 9.60869L7.5499 15.0506L6.66602 14.1667L11.2241 9.60869L6.66602 5.05063L7.5499 4.16675Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}

@@ -37,7 +37,9 @@ export default function InputField({
           error && "text-feedback-error-fg border-feedback-error-fg"
         )}
       />
-      {error && <p className="text-feedback-error-fg">{error}</p>}
+      {error && (
+        <p className="text-feedback-error-fg text-caption-s">{error}</p>
+      )}
     </div>
   );
 }

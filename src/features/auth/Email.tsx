@@ -35,7 +35,6 @@ export default function Email() {
               step: "emailVerification",
             },
           });
-        } else {
           updateEmail(email);
         }
       }}

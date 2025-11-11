@@ -1,74 +1,104 @@
 import BlockButton from "@/components/BlockButton";
-import { Link } from "@tanstack/react-router";
 import useSignupStore from "@/store/signupStore";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { OtpInput } from "@/components/InputField";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function EmailVerification() {
   const updateIsEmailVerified = useSignupStore.use.updateIsEmailVerified();
-  const [code, setCode] = useState(["", "", "", ""]);
+  const email = useSignupStore.use.email();
+  const [enteredCode, setEnteredCode] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  // function handleChange(e: ChangeEvent<HTMLInputElement>, idx: number) {
-  //   setCode((prev) =>
-  //     prev.map((v, i) => {
-  //       if (i === idx) {
-  //         return e.target.value;
-  //       } else {
-  //         return v;
-  //       }
-  //     })
-  //   );
-  //   if (e.target.value !== "") {
-  //     inputRefs.current[idx + 1]?.focus();
-  //   }
-  // }
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [timeLeft, setTimeLeft] = useState(180); // 3분
 
-  // function handleBack(e: KeyboardEvent<HTMLInputElement>, idx: number) {
-  //   if (e.key !== "Backspace") return;
+  // 진입 시 이메일 전송
+  useEffect(() => {
+    // Todo: 이메일 인증번호 발송 api 연동
+    alert(email + "로 인증번호 발송: 123456");
+  }, [email]);
 
-  //   // 1) 현재 칸에 값이 있으면, 지우고 커서 이동 막기
-  //   if (code[idx] !== "") {
-  //     e.preventDefault(); // 브라우저 기본 Backspace 동작 막고
-  //     const newCode = [...code];
-  //     newCode[idx] = "";
-  //     setCode(newCode);
-  //     return;
-  //   }
+  function startTimer() {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000); // 1초마다
+  }
 
-  //   // 2) 이미 빈 칸이면 이전 인풋으로 포커스
-  //   inputRefs.current[idx - 1]?.focus();
-  // }
+  // 진입 시 타이머 설졍
+  useEffect(() => {
+    startTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  });
+
+  function handleResend() {
+    setTimeLeft(180);
+    startTimer();
+    // Todo: 이메일 인증번호 발송 api 연동
+    alert(email + "로 인증번호 재전송: 123456");
+  }
 
   return (
     <div>
-      <form action="">
-        <OtpInput length={6} error={error} onChange={setCode} />
-        {/* {code.map((digit, idx) => (
-          <InputField
-            key={idx}
-            ref={(el) => {
-              inputRefs.current[idx] = el;
+      <form
+        action=""
+        onSubmit={(e) => {
+          e.preventDefault();
+          // Todo: 이메일 인증번호 확인 api 연동
+          if (enteredCode === "123456") {
+            alert(enteredCode + "를 백엔드에 전송했습니다. 에러 없음.");
+            updateIsEmailVerified();
+            navigate({
+              to: "/signup",
+              search: {
+                step: "password",
+              },
+            });
+          } else {
+            setError("입력한 정보를 한번 더 확인해주세요.");
+          }
+        }}
+      >
+        {/* Todo: 상단 마진 수정 */}
+        <div className="mb-margin-y-l flex flex-col gap-gap-y-m">
+          <OtpInput
+            length={6}
+            error={error}
+            onChange={(code: string) => {
+              setError("");
+              setEnteredCode(code);
             }}
-            onChange={(e) => handleChange(e, idx)}
-            onKeyDown={(e) => handleBack(e, idx)}
-            value={digit}
-            type="number"
-            // error={error}
           />
-        ))} */}
+          <p className="text-center text-label-m text-text-tertiary">
+            <span>
+              {Math.floor(timeLeft / 60)
+                .toString()
+                .padStart(2, "0")}
+              :{(timeLeft % 60).toString().padStart(2, "0")}
+            </span>{" "}
+            내에 입력해주세요
+          </p>
+        </div>
+
+        <BlockButton disabled={enteredCode.length !== 6}>완료</BlockButton>
       </form>
-      {!error ? (
-        <Link
-          to="/signup"
-          search={{ step: "password" }}
-          onClick={updateIsEmailVerified}
-        >
-          <BlockButton>완료</BlockButton>
-        </Link>
-      ) : (
-        <BlockButton disabled>완료</BlockButton>
-      )}
+      {/* Todo: 상단 마진 수정 */}
+      <p className="text-center text-label-m text-text-primary mt-margin-y-l">
+        인증번호가 오지 않았나요?{" "}
+        <button onClick={handleResend} className="text-brand-primary underline">
+          재발송
+        </button>
+      </p>
     </div>
   );
 }

@@ -75,7 +75,7 @@ function RouteComponent() {
           transition={{ ease: "easeOut" }}
           className="w-full h-full"
         >
-          <h1 className="text-title-1 text-text-primary my-margin-y-m">
+          <h1 className="whitespace-pre-line text-title-1 text-text-primary my-margin-y-m">
             {contentTitle}
           </h1>
           {content}

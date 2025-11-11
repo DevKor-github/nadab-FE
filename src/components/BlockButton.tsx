@@ -26,8 +26,7 @@ export default function BlockButton({
           "bg-button-tertiary-bg-default border border-button-tertiary-border-default hover:bg-button-tertiary-bg-hover hover:border-button-tertiary-border-hover text-button-tertiary-text-default":
             variant === "tertiary" && !disabled,
         },
-        disabled &&
-          "bg-button-disabled-bg-default text-button-disabled-text-default"
+        disabled && "bg-button-disabled-bg text-button-disabled-text"
       )}
       {...props}
     >

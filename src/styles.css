@@ -138,21 +138,21 @@
   /* Caption */
   .text-caption-l {
     font-weight: 400; /* Regular */
-    font-size: 16px; /* md */
+    font-size: 14px; /* md */
     line-height: 24px; /* Line Height L */
     letter-spacing: 0;
   }
 
   .text-caption-m {
     font-weight: 400; /* Regular */
-    font-size: 14px; /* sm */
+    font-size: 12px; /* sm */
     line-height: 20px; /* Line Height M */
     letter-spacing: 0;
   }
 
   .text-caption-s {
     font-weight: 400; /* Regular */
-    font-size: 12px; /* xs */
+    font-size: 11px; /* xs */
     line-height: 16px; /* Line Height S */
     letter-spacing: 0;
   }

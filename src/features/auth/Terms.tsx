@@ -109,7 +109,15 @@ export default function Terms() {
                 );
               }}
             >
-              <button className="flex items-center px-padding-x-xs py-padding-y-xs">
+              <button
+                className={clsx(
+                  "flex items-center px-padding-x-xs py-padding-y-xs",
+                  {
+                    "text-icon-disabled": !item.isAgreed,
+                    "text-icon-primary": item.isAgreed,
+                  }
+                )}
+              >
                 <AgreementCheckboxIcon />
               </button>
               <span className="text-label-l">
@@ -137,7 +145,7 @@ export default function Terms() {
             <br />
             개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있으며,
             <br />
-            동의 거부시 회원체 서비스 이용이 제한됩니다.
+            동의 거부시 회원제 서비스 이용이 제한됩니다.
           </p>
         </>
       )}

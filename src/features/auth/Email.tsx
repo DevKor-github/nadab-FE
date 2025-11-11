@@ -57,7 +57,7 @@ export default function Email() {
         />
       </div>
       <div className="my-margin-y-s">
-        <BlockButton disabled={!!emailError}>완료</BlockButton>
+        <BlockButton disabled={!!emailError || !email}>완료</BlockButton>
       </div>
     </form>
   );

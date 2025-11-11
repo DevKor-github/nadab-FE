@@ -5,36 +5,56 @@ import clsx from "clsx";
 import { useState } from "react";
 import {
   AgreementCheckboxIcon,
-  AgreementChevronIcon,
   SelectAllCheckboxIcon,
 } from "@/components/Icons";
 
-// Todo: 색깔 디자인 토큰 적용
 export default function Terms() {
   // Todo: 약관 링크 변경
   const initialItems = [
     {
       isRequired: true,
-      title: "서비스 이용약관에 동의해요.",
-      url: "https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96",
+      title: (
+        <>
+          <a
+            className="underline"
+            target="_blank"
+            rel="noreferrer"
+            href="https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96"
+            onClick={(e) => e.stopPropagation()}
+          >
+            서비스 이용약관
+          </a>
+          에 동의해요
+        </>
+      ),
       isAgreed: false,
     },
     {
       isRequired: true,
-      title: "개인정보 처리 방침에 동의해요.",
-      url: "https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96",
+      title: (
+        <>
+          <a
+            className="underline"
+            target="_blank"
+            rel="noreferrer"
+            href="https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96"
+            onClick={(e) => e.stopPropagation()}
+          >
+            개인정보 처리 방침
+          </a>
+          에 동의해요.
+        </>
+      ),
       isAgreed: false,
     },
     {
       isRequired: true,
       title: "만 14세 이상이에요.",
-      url: "https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96",
       isAgreed: false,
     },
     {
       isRequired: false,
       title: "마케팅 정보 수신에 동의해요.",
-      url: "https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96",
       isAgreed: false,
     },
   ];
@@ -71,7 +91,6 @@ export default function Terms() {
       <ul className="flex flex-col gap-padding-y-xs">
         {items.map((item, idx) => {
           return (
-            // <Link to={item.url} key={idx}>
             <li
               key={idx}
               className={clsx("cursor-pointer flex gap-margin-x-s", {
@@ -97,11 +116,7 @@ export default function Terms() {
                 {item.isRequired === true ? "필수" : "선택"}
               </span>
               <p className="text-caption-l">{item.title}</p>
-              <span className="ml-auto">
-                <AgreementChevronIcon />
-              </span>
             </li>
-            // </Link>
           );
         })}
       </ul>

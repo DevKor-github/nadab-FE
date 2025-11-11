@@ -41,7 +41,7 @@ export default function InputField({
           {
             "border-border-base": variant === "basic" && !error,
           },
-          error && "text-feedback-error-fg border-feedback-error-fg"
+          error && "text-feedback-error-fg! border-feedback-error-fg!"
         )}
       />
       {error && (

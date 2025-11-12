@@ -63,9 +63,9 @@ function RouteComponent() {
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={step}
-          initial={{ x: 150, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -150, opacity: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ ease: "easeOut" }}
           className="w-full h-full"
         >

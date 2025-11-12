@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import useSignupStore from "@/store/signupStore";
 import clsx from "clsx";
 import { useState } from "react";
+import StepTitle from "@/components/StepTitle";
 import {
   AgreementCheckboxIcon,
   SelectAllCheckboxIcon,
@@ -19,7 +20,7 @@ export default function Terms() {
             className="underline"
             target="_blank"
             rel="noreferrer"
-            href="https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96"
+            href="https://peat-language-671.notion.site/2a93409bb9b680df9622d528417a6f5b"
             onClick={(e) => e.stopPropagation()}
           >
             서비스 이용약관
@@ -37,7 +38,7 @@ export default function Terms() {
             className="underline"
             target="_blank"
             rel="noreferrer"
-            href="https://www.notion.so/devkor-official/2a31a845ed3e80199d38f75a6bd02a96"
+            href="https://peat-language-671.notion.site/2a03409bb9b6808bba61fffff6d03c56"
             onClick={(e) => e.stopPropagation()}
           >
             개인정보 처리 방침
@@ -69,86 +70,92 @@ export default function Terms() {
   });
   const updateIsTermsAgreed = useSignupStore.use.updateIsTermsAgreed();
   return (
-    <div className="py-padding-y-m flex flex-col gap-margin-y-m">
-      <button
-        className="flex items-center gap-padding-x-xs text-button-1 text-text-primary px-padding-x-s py-padding-y-s border border-border-base rounded-lg"
-        onClick={() => {
-          setItems((prev) =>
-            prev.map((item) => ({ ...item, isAgreed: !isAllAgreed }))
-          );
-        }}
-      >
-        <span
-          className={clsx({
-            "text-icon-disabled": !isAllAgreed,
-            "text-icon-primary": isAllAgreed,
-          })}
+    <div>
+      <div className="my-margin-y-m">
+        <StepTitle>서비스 이용약관에 동의해주세요.</StepTitle>
+      </div>
+
+      <div className="py-padding-y-m flex flex-col gap-margin-y-m">
+        <button
+          className="flex items-center gap-padding-x-xs text-button-1 text-text-primary px-padding-x-s py-padding-y-s border border-border-base rounded-lg"
+          onClick={() => {
+            setItems((prev) =>
+              prev.map((item) => ({ ...item, isAgreed: !isAllAgreed }))
+            );
+          }}
         >
-          <SelectAllCheckboxIcon />
-        </span>
-        <p>약관 모두 동의하기</p>
-      </button>
-      <ul className="flex flex-col gap-padding-y-xs">
-        {items.map((item, idx) => {
-          return (
-            <li
-              key={idx}
-              className={clsx("cursor-pointer flex gap-margin-x-s", {
-                "text-text-disabled": !item.isAgreed,
-                "text-text-primary": item.isAgreed,
-              })}
-              onClick={() => {
-                setItems((prev) =>
-                  prev.map((innerItem, i) => {
-                    if (idx === i) {
-                      return { ...innerItem, isAgreed: !innerItem.isAgreed };
-                    } else {
-                      return innerItem;
-                    }
-                  })
-                );
-              }}
-            >
-              <button
-                className={clsx(
-                  "flex items-center px-padding-x-xs py-padding-y-xs",
-                  {
-                    "text-icon-disabled": !item.isAgreed,
-                    "text-icon-primary": item.isAgreed,
-                  }
-                )}
+          <span
+            className={clsx({
+              "text-icon-disabled": !isAllAgreed,
+              "text-icon-primary": isAllAgreed,
+            })}
+          >
+            <SelectAllCheckboxIcon />
+          </span>
+          <p>약관 모두 동의하기</p>
+        </button>
+        <ul className="flex flex-col gap-padding-y-xs">
+          {items.map((item, idx) => {
+            return (
+              <li
+                key={idx}
+                className={clsx("cursor-pointer flex gap-margin-x-s", {
+                  "text-text-disabled": !item.isAgreed,
+                  "text-text-primary": item.isAgreed,
+                })}
+                onClick={() => {
+                  setItems((prev) =>
+                    prev.map((innerItem, i) => {
+                      if (idx === i) {
+                        return { ...innerItem, isAgreed: !innerItem.isAgreed };
+                      } else {
+                        return innerItem;
+                      }
+                    })
+                  );
+                }}
               >
-                <AgreementCheckboxIcon />
-              </button>
-              <span className="text-label-l">
-                {item.isRequired === true ? "필수" : "선택"}
-              </span>
-              <p className="text-caption-l">{item.title}</p>
-            </li>
-          );
-        })}
-      </ul>
-      {isAllRequiredAgreed ? (
-        <Link
-          to="/signup"
-          search={{ step: "email" }}
-          onClick={updateIsTermsAgreed}
-        >
-          <BlockButton>완료</BlockButton>
-        </Link>
-      ) : (
-        <>
-          <BlockButton disabled>완료</BlockButton>
-          {/* eslint-disable react/no-unescaped-entities */}
-          <p className="text-label-s text-center text-text-tertiary">
-            '선택' 항목에 동의하지 않아도 서비스 이용이 가능합니다.
-            <br />
-            개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있으며,
-            <br />
-            동의 거부시 회원제 서비스 이용이 제한됩니다.
-          </p>
-        </>
-      )}
+                <button
+                  className={clsx(
+                    "flex items-center px-padding-x-xs py-padding-y-xs",
+                    {
+                      "text-icon-disabled": !item.isAgreed,
+                      "text-icon-primary": item.isAgreed,
+                    }
+                  )}
+                >
+                  <AgreementCheckboxIcon />
+                </button>
+                <span className="text-label-l">
+                  {item.isRequired === true ? "필수" : "선택"}
+                </span>
+                <p className="text-caption-l">{item.title}</p>
+              </li>
+            );
+          })}
+        </ul>
+        {isAllRequiredAgreed ? (
+          <Link
+            to="/signup"
+            search={{ step: "email" }}
+            onClick={updateIsTermsAgreed}
+          >
+            <BlockButton>완료</BlockButton>
+          </Link>
+        ) : (
+          <>
+            <BlockButton disabled>완료</BlockButton>
+            {/* eslint-disable react/no-unescaped-entities */}
+            <p className="text-label-s text-center text-text-tertiary">
+              '선택' 항목에 동의하지 않아도 서비스 이용이 가능합니다.
+              <br />
+              개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있으며,
+              <br />
+              동의 거부시 회원제 서비스 이용이 제한됩니다.
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 }

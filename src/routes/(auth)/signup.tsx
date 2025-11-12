@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { zodValidator } from "@tanstack/zod-adapter";
 import { z } from "zod";
-import { motion, AnimatePresence } from "motion/react";
 
 import Terms from "@/features/auth/Terms";
 import Email from "@/features/auth/Email";
@@ -58,20 +57,9 @@ function RouteComponent() {
   }
   return (
     // Todo: 뒤로가기 시에는 애니메이션 반대로 줘야 함
-    <div>
+    <div className="w-full h-full bg-surface-base">
       <SubHeader>{headerTitle}</SubHeader>
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={step}
-          initial={{ x: 150, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -150, opacity: 0 }}
-          transition={{ ease: "easeOut" }}
-          className="w-full h-full"
-        >
-          {content}
-        </motion.div>
-      </AnimatePresence>
+      {content}
     </div>
   );
 }

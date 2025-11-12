@@ -13,7 +13,7 @@ function RouteComponent() {
   const [password, setPassword] = useState("");
 
   return (
-    <div>
+    <div className="bg-surface-base">
       <SubHeader>로그인</SubHeader>
       <form
         onSubmit={(e) => {

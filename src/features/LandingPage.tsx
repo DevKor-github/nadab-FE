@@ -8,7 +8,7 @@ export function LandingPage() {
   const reset = useSignupStore.use.reset();
   return (
     // pt - 전체 레이아웃 하단 패딩때문에 중앙정렬 맞추려고 넣음..
-    <div className="w-full h-full flex flex-col items-center pt-padding-y-m">
+    <div className="w-full h-full flex flex-col items-center pt-padding-y-m bg-surface-base">
       {/* 위 절반 */}
       <div className="flex-1 flex flex-col justify-center items-center">
         <ColoredMainLogo />

@@ -94,7 +94,7 @@ export default function Terms() {
           </span>
           <p>약관 모두 동의하기</p>
         </button>
-        <ul className="flex flex-col gap-padding-y-xs">
+        <ul className="flex flex-col justify-center gap-padding-y-xs">
           {items.map((item, idx) => {
             return (
               <li
@@ -116,13 +116,10 @@ export default function Terms() {
                 }}
               >
                 <button
-                  className={clsx(
-                    "flex items-center px-padding-x-xs py-padding-y-xs",
-                    {
-                      "text-icon-disabled": !item.isAgreed,
-                      "text-icon-primary": item.isAgreed,
-                    }
-                  )}
+                  className={clsx("flex px-padding-x-xs py-padding-y-xs", {
+                    "text-icon-disabled": !item.isAgreed,
+                    "text-icon-primary": item.isAgreed,
+                  })}
                 >
                   <AgreementCheckboxIcon />
                 </button>

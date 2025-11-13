@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 // @ts-ignore
 import "swiper/css";
 // @ts-ignore
@@ -41,6 +41,7 @@ export default function FeatureDescription() {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <div className="h-full flex flex-col gap-padding-y-xl pt-padding-y-m">
@@ -72,6 +73,7 @@ export default function FeatureDescription() {
               swiper.pagination.update();
             });
           }}
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
           navigation={{ enabled: false }}
           pagination={{ enabled: false }}
           className="h-full"
@@ -91,7 +93,12 @@ export default function FeatureDescription() {
                   }}
                 >
                   <div className="h-full flex flex-col gap-padding-y-xl">
-                    <div className="flex-1 bg-neutral-100 rounded-[20px] "></div>
+                    <div className="flex-1 bg-surface-layer-3 rounded-[20px] relative overflow-hidden">
+                      <img
+                        src="/onboarding1.png"
+                        className="absolute inset-0 w-full h-full object-contain py-margin-y-s"
+                      />
+                    </div>
                     <div>
                       <div className="w-fit text-caption-s text-brand-primary py-padding-y-xxs px-padding-x-xs border border-brand-primary rounded-3xl">
                         {contents[i].category}
@@ -112,7 +119,9 @@ export default function FeatureDescription() {
 
       <div ref={paginationRef}></div>
 
-      <BlockButton disabled>시작하기</BlockButton>
+      <BlockButton disabled={activeIndex !== contents.length - 1}>
+        시작하기
+      </BlockButton>
     </div>
   );
 }

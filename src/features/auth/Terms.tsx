@@ -99,10 +99,13 @@ export default function Terms() {
             return (
               <li
                 key={idx}
-                className={clsx("cursor-pointer flex gap-margin-x-s", {
-                  "text-text-disabled": !item.isAgreed,
-                  "text-text-primary": item.isAgreed,
-                })}
+                className={clsx(
+                  "cursor-pointer flex items-center gap-margin-x-s",
+                  {
+                    "text-text-disabled": !item.isAgreed,
+                    "text-text-primary": item.isAgreed,
+                  }
+                )}
                 onClick={() => {
                   setItems((prev) =>
                     prev.map((innerItem, i) => {

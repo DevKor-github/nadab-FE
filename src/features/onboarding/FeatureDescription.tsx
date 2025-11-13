@@ -1,0 +1,118 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import { useRef } from "react";
+// @ts-ignore
+import "swiper/css";
+// @ts-ignore
+import "swiper/css/navigation";
+// @ts-ignore
+import "swiper/css/pagination";
+import BlockButton from "@/components/BlockButton";
+
+export default function FeatureDescription() {
+  const contents = [
+    {
+      category: "오늘의 질문",
+      title: `하루 한 번,
+당신에게 질문을 보내요.`,
+      content: `무엇을 써야 할지 막막했나요? 
+매일의 질문에 따라, 
+당신의 생각과 감정을 글쓰기로 기록해보세요. 
+꾸준한 기록은 당신의 마음을 단단하게 만들 거예요.`,
+    },
+    {
+      category: "분석",
+      title: `흩어진 기록 속에서
+'나'를 발견해요.`,
+      content: `당신의 소중한 이야기들이 쌓이면, 연결고리를 찾아낼 거예요. 
+잊고 있던 당신의 생각 패턴이나, 
+어느새 훌쩍 자란 당신의 모습을 발견하는 여정에 함께할게요.
+ㅤ`,
+    },
+    {
+      category: "친구",
+      title: `친구들과 
+나의 생각을 나눠요.`,
+      content: `당신이 신뢰하는 소수의 친구들과 당신의 생각 조각을 잠시 나눌 수 있는 작은 공간을 마련했어요.
+공유하고 싶은 기록이 생겼다면, 공유하기로 함께 나눠보세요.
+ㅤ`,
+    },
+  ];
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+  const paginationRef = useRef(null);
+
+  return (
+    <div className="h-full flex flex-col gap-padding-y-xl pt-padding-y-m">
+      <div className="flex-1 relative">
+        {/* 커스텀 네비게이션 */}
+        <button ref={prevRef} className="absolute top-1/2 z-10 left-0">
+          Prev
+        </button>
+        <button ref={nextRef} className="absolute top-1/2 z-10 right-0">
+          Next
+        </button>
+        <Swiper
+          spaceBetween={10}
+          modules={[Navigation, Pagination]}
+          onSwiper={(swiper) => {
+            // 순서 이슈로 ref가 주입이 안 되어서 임시 땜빵
+            setTimeout(() => {
+              // @ts-ignore
+              swiper.params.navigation.prevEl = prevRef.current;
+              // @ts-ignore
+              swiper.params.navigation.nextEl = nextRef.current;
+              // @ts-ignore
+              swiper.params.pagination.el = paginationRef.current;
+
+              swiper.navigation.init();
+              swiper.navigation.update();
+              swiper.pagination.init();
+              swiper.pagination.render();
+              swiper.pagination.update();
+            });
+          }}
+          navigation={{ enabled: false }}
+          pagination={{ enabled: false }}
+          className="h-full"
+        >
+          {Array(3)
+            .fill(0)
+            .map((_, i) => {
+              return (
+                // 스와이프에 불편해서 드래그 막음
+                <SwiperSlide
+                  key={i}
+                  style={{
+                    WebkitUserSelect: "none",
+                    MozUserSelect: "none",
+                    msUserSelect: "none",
+                    userSelect: "none",
+                  }}
+                >
+                  <div className="h-full flex flex-col gap-padding-y-xl">
+                    <div className="flex-1 bg-neutral-100 rounded-[20px] "></div>
+                    <div>
+                      <div className="w-fit text-caption-s text-brand-primary py-padding-y-xxs px-padding-x-xs border border-brand-primary rounded-3xl">
+                        {contents[i].category}
+                      </div>
+                      <h1 className="whitespace-pre-line text-headline-s text-text-primary mt-margin-y-s mb-margin-y-m">
+                        {contents[i].title}
+                      </h1>
+                      <p className="text-text-tertiary text-caption-l whitespace-pre-line">
+                        {contents[i].content}
+                      </p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+      </div>
+
+      <div ref={paginationRef}></div>
+
+      <BlockButton disabled>시작하기</BlockButton>
+    </div>
+  );
+}

@@ -45,14 +45,12 @@ export default function Email() {
         onSubmit={(e) => {
           e.preventDefault();
           if (!passwordError && !confirmPasswordError) {
-            // Todo: 다음 페이지 이동
-            navigate({ to: "/" });
-            // navigate({
-            //   to: "/signup",
-            //   search: {
-            //     step: "emailVerification",
-            //   },
-            // });
+            navigate({
+              to: "/signup",
+              search: {
+                step: "onboarding",
+              },
+            });
             updatePassword(password);
           }
         }}

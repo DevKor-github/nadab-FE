@@ -6,6 +6,7 @@
 }
 
 @layer base {
+  /* 디폴트 버튼 스타일 */
   button {
     cursor: pointer;
   }
@@ -14,15 +15,31 @@
     cursor: default;
   }
 
+  /* 숫자 인풋 화살표 제거 */
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  /* Firefox */
   input[type="number"] {
     -moz-appearance: textfield;
+  }
+
+  /* swiper 기본스타일 오버라이드 */
+  .swiper-pagination-bullet {
+    background-color: var(--color-icon-disabled) !important;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: var(--color-brand-primary) !important;
+  }
+
+  .swiper-pagination-bullets,
+  .swiper-pagination-horizontal {
+    height: 8px;
+    display: flex;
+    justify-content: center;
   }
 }
 

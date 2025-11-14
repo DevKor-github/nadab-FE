@@ -95,8 +95,8 @@ export default function FeatureDescription() {
                   <div className="h-full flex flex-col gap-padding-y-xl">
                     <div className="flex-1 bg-surface-layer-3 rounded-[20px] relative overflow-hidden">
                       <img
-                        src="/onboarding1.png"
-                        className="absolute inset-0 w-full h-full object-contain py-margin-y-s"
+                        src="/onboarding2.png"
+                        className="absolute inset-0 w-full h-full object-contain"
                       />
                     </div>
                     <div>

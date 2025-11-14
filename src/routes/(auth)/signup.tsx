@@ -9,6 +9,7 @@ import Password from "@/features/auth/Password";
 import EmailVerification from "@/features/auth/EmailVerification";
 import SubHeader from "@/components/Header";
 import FeatureDescription from "@/features/onboarding/FeatureDescription";
+import Category from "@/features/onboarding/Category";
 
 const sighupStepSchema = z.object({
   step: z
@@ -56,6 +57,9 @@ function RouteComponent() {
       content = <FeatureDescription />;
       break;
     case "category":
+      headerTitle = "test";
+      content = <Category />;
+      break;
     case "nickname":
     default:
       content = <div>Error</div>;

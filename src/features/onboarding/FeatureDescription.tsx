@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 import BlockButton from "@/components/BlockButton";
 import { LeftCarousel, RightCarousel } from "@/components/Carousels";
 import clsx from "clsx";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function FeatureDescription() {
   const contents = [
@@ -47,6 +48,7 @@ export default function FeatureDescription() {
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate();
 
   return (
     <div className="h-full flex flex-col gap-padding-y-xl pt-padding-y-m">
@@ -91,7 +93,7 @@ export default function FeatureDescription() {
           pagination={{ enabled: false }}
           className="h-full"
         >
-          {Array(3)
+          {Array(contents.length)
             .fill(0)
             .map((_, i) => {
               return (
@@ -132,7 +134,17 @@ export default function FeatureDescription() {
 
       <div ref={paginationRef}></div>
 
-      <BlockButton disabled={activeIndex !== contents.length - 1}>
+      <BlockButton
+        disabled={activeIndex !== contents.length - 1}
+        onClick={() => {
+          navigate({
+            to: "/signup",
+            search: {
+              step: "category",
+            },
+          });
+        }}
+      >
         시작하기
       </BlockButton>
     </div>

@@ -146,3 +146,41 @@ export function AgreementChevronIcon() {
     </svg>
   );
 }
+
+export function ChevronLeftIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M10.1213 11.5303L15.591 6.06066L14.5303 5L8 11.5303L14.5303 18.0607L15.591 17L10.1213 11.5303Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+export function ChevronRightIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M10.0607 5L16.591 11.5303L10.0607 18.0607L9 17L14.4697 11.5303L9 6.06066L10.0607 5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}

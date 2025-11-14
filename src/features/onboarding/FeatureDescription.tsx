@@ -8,6 +8,8 @@ import "swiper/css/navigation";
 // @ts-ignore
 import "swiper/css/pagination";
 import BlockButton from "@/components/BlockButton";
+import { LeftCarousel, RightCarousel } from "@/components/Carousels";
+import clsx from "clsx";
 
 export default function FeatureDescription() {
   const contents = [
@@ -19,6 +21,7 @@ export default function FeatureDescription() {
 매일의 질문에 따라, 
 당신의 생각과 감정을 글쓰기로 기록해보세요. 
 꾸준한 기록은 당신의 마음을 단단하게 만들 거예요.`,
+      imgSrc: "/onboarding1.png",
     },
     {
       category: "분석",
@@ -28,6 +31,7 @@ export default function FeatureDescription() {
 잊고 있던 당신의 생각 패턴이나, 
 어느새 훌쩍 자란 당신의 모습을 발견하는 여정에 함께할게요.
 ㅤ`,
+      imgSrc: "/onboarding2.png",
     },
     {
       category: "친구",
@@ -36,6 +40,7 @@ export default function FeatureDescription() {
       content: `당신이 신뢰하는 소수의 친구들과 당신의 생각 조각을 잠시 나눌 수 있는 작은 공간을 마련했어요.
 공유하고 싶은 기록이 생겼다면, 공유하기로 함께 나눠보세요.
 ㅤ`,
+      imgSrc: "/onboarding3.png",
     },
   ];
   const prevRef = useRef(null);
@@ -45,14 +50,22 @@ export default function FeatureDescription() {
 
   return (
     <div className="h-full flex flex-col gap-padding-y-xl pt-padding-y-m">
-      <div className="flex-1 relative">
+      <div className="flex-1 w-full relative">
         {/* 커스텀 네비게이션 */}
-        <button ref={prevRef} className="absolute top-1/2 z-10 left-0">
-          Prev
-        </button>
-        <button ref={nextRef} className="absolute top-1/2 z-10 right-0">
-          Next
-        </button>
+        <LeftCarousel
+          ref={prevRef}
+          className={clsx(
+            "absolute top-1/2 z-10 left-0 sm:block hidden",
+            activeIndex === 0 && "hidden!"
+          )}
+        />
+        <RightCarousel
+          ref={nextRef}
+          className={clsx(
+            "absolute top-1/2 z-10 right-0 sm:block hidden",
+            activeIndex === contents.length - 1 && "hidden!"
+          )}
+        />
         <Swiper
           spaceBetween={10}
           modules={[Navigation, Pagination]}
@@ -95,7 +108,7 @@ export default function FeatureDescription() {
                   <div className="h-full flex flex-col gap-padding-y-xl">
                     <div className="flex-1 bg-surface-layer-3 rounded-[20px] relative overflow-hidden">
                       <img
-                        src="/onboarding2.png"
+                        src={contents[i].imgSrc}
                         className="absolute inset-0 w-full h-full object-contain"
                       />
                     </div>

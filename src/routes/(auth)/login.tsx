@@ -1,5 +1,5 @@
 import BlockButton from "@/components/BlockButton";
-import SubHeader from "@/components/Header";
+import { SubHeader } from "@/components/Headers";
 import InputField from "@/components/InputField";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";

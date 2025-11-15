@@ -1,4 +1,4 @@
-import SubHeader from "@/components/Header";
+import { SubHeader, ProgressHeader } from "@/components/Headers";
 
 export const signupSteps = [
   {
@@ -29,7 +29,12 @@ export const signupSteps = [
   {
     id: "category",
     path: "/onboarding/category",
-    header: <SubHeader>카테고리</SubHeader>,
+    header: <ProgressHeader progress={50} />,
+  },
+  {
+    id: "profile",
+    path: "/onboarding/profile",
+    header: <ProgressHeader progress={100} />,
   },
 ] as const;
 

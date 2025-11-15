@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
 import {
   BarChartSquareFilledIcon,
@@ -10,6 +10,7 @@ import StepTitle from "@/features/auth/StepTitle";
 import clsx from "clsx";
 import { useState } from "react";
 import useSignupStore from "@/store/signupStore";
+import { getNextStepPath } from "@/features/auth/signupSteps";
 
 export const Route = createFileRoute("/(auth)/onboarding/category")({
   component: Category,
@@ -48,6 +49,7 @@ function Category() {
   ];
   const [items, setItems] = useState(initialItems);
   const selectedItem = items.find((item) => item.isSelected);
+  const navigate = useNavigate();
 
   return (
     // Todo: 버튼 밑으로 내리는 거 상위 컴포넌트에서 해주기
@@ -74,7 +76,7 @@ function Category() {
                       if (idx === i) {
                         return {
                           ...innerItem,
-                          isSelected: !innerItem.isSelected,
+                          isSelected: true,
                         };
                       } else {
                         return { ...innerItem, isSelected: false };
@@ -99,8 +101,13 @@ function Category() {
         </ul>
       </div>
       <BlockButton
+        disabled={!selectedItem}
         onClick={() => {
           updateCategory(selectedItem!.title);
+          const nextStep = getNextStepPath("category");
+          navigate({
+            to: nextStep,
+          });
         }}
       >
         다음

@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
 import clsx from "clsx";
 import { useState } from "react";
+import useSignupStore from "@/store/signupStore";
 import StepTitle from "@/features/auth/StepTitle";
 import {
   AgreementCheckboxIcon,
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/(auth)/signup/terms")({
 });
 
 function Terms() {
+  const updateIsTermsAgreed = useSignupStore.use.updateIsTermsAgreed();
   const initialItems = [
     {
       isRequired: true,
@@ -142,6 +144,7 @@ function Terms() {
         <BlockButton
           disabled={!isAllRequiredAgreed}
           onClick={() => {
+            updateIsTermsAgreed();
             const nextStep = getNextStepPath("terms");
             navigate({ to: nextStep });
           }}

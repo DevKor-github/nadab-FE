@@ -7,6 +7,7 @@ type State = {
   email: string;
   isEmailVerified: boolean;
   password: string;
+  hasSeenIntro: boolean;
   category: string;
   nickname: string;
 };
@@ -16,6 +17,7 @@ type Action = {
   updateEmail: (email: State["email"]) => void;
   updateIsEmailVerified: () => void;
   updatePassword: (password: State["password"]) => void;
+  updateHasSeenIntro: () => void;
   updateCategory: (category: State["category"]) => void;
   updateNickname: (nickname: State["nickname"]) => void;
   reset: () => void;
@@ -28,12 +30,14 @@ const useSignupStoreBase = create<State & Action>()(
       email: "",
       isEmailVerified: false,
       password: "",
+      hasSeenIntro: false,
       category: "",
       nickname: "",
       updateIsTermsAgreed: () => set({ isTermsAgreed: true }),
       updateEmail: (email) => set(() => ({ email: email })),
       updateIsEmailVerified: () => set({ isEmailVerified: true }),
       updatePassword: (password) => set(() => ({ password: password })),
+      updateHasSeenIntro: () => set({ hasSeenIntro: true }),
       updateCategory: (category) => set(() => ({ category: category })),
       updateNickname: (nickname) => set(() => ({ nickname: nickname })),
       reset: () => set(store.getInitialState),
@@ -41,6 +45,8 @@ const useSignupStoreBase = create<State & Action>()(
     {
       name: "signup-storage",
       storage: createJSONStorage(() => sessionStorage),
+      // 이메일 인증코드 확인하러 다른 앱 갈 때 상태 리셋되지 않도록
+      // 이 둘만 세션스토리지에 별도 저장
       partialize: (state) => ({
         isTermsAgreed: state.isTermsAgreed,
         email: state.email,

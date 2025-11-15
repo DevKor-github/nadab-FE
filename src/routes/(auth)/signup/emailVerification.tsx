@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
 import useSignupStore from "@/store/signupStore";
 import { useEffect, useRef, useState } from "react";
@@ -9,6 +9,13 @@ import { getNextStepPath } from "@/features/auth/signupSteps";
 
 export const Route = createFileRoute("/(auth)/signup/emailVerification")({
   component: EmailVerification,
+  beforeLoad: () => {
+    // 이전 단계 건너뛰는 것 방지
+    const { email } = useSignupStore.getState();
+    if (!email) {
+      throw redirect({ to: "/signup/terms" });
+    }
+  },
 });
 
 function EmailVerification() {

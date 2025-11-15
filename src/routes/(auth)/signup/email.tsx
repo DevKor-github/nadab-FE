@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
 import { useState } from "react";
 import { UserSchema } from "@/features/user/userSchema";
@@ -7,12 +7,21 @@ import InputField from "@/components/InputField";
 import { useNavigate } from "@tanstack/react-router";
 import StepTitle from "@/features/auth/StepTitle";
 import { getNextStepPath } from "@/features/auth/signupSteps";
+import useSignupStore from "@/store/signupStore";
 
 export const Route = createFileRoute("/(auth)/signup/email")({
   component: Email,
+  beforeLoad: () => {
+    // 이전 단계 건너뛰는 것 방지
+    const { isTermsAgreed } = useSignupStore.getState();
+    if (!isTermsAgreed) {
+      throw redirect({ to: "/signup/terms" });
+    }
+  },
 });
 
 export default function Email() {
+  const updateEmail = useSignupStore.use.updateEmail();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
@@ -44,6 +53,7 @@ export default function Email() {
             if (document.activeElement instanceof HTMLElement) {
               document.activeElement.blur();
             }
+            updateEmail(email);
             const nextStep = getNextStepPath("email");
             navigate({
               to: nextStep,

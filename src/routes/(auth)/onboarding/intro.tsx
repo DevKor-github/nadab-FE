@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { useRef, useState } from "react";
@@ -13,9 +13,18 @@ import { LeftCarousel, RightCarousel } from "@/components/Carousels";
 import clsx from "clsx";
 import { useNavigate } from "@tanstack/react-router";
 import { getNextStepPath } from "@/features/auth/signupSteps";
+import useSignupStore from "@/store/signupStore";
 
 export const Route = createFileRoute("/(auth)/onboarding/intro")({
   component: FeatureDescription,
+  beforeLoad: () => {
+    // 이전 단계 건너뛰는 것 방지
+    const { password } = useSignupStore.getState();
+    // Todo: 소셜 로그인 확인 필요
+    if (!password) {
+      throw redirect({ to: "/signup/terms" });
+    }
+  },
 });
 
 function FeatureDescription() {
@@ -54,6 +63,7 @@ function FeatureDescription() {
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const updateHasSeenIntro = useSignupStore.use.updateHasSeenIntro();
   const navigate = useNavigate();
 
   return (
@@ -143,6 +153,7 @@ function FeatureDescription() {
       <BlockButton
         disabled={activeIndex !== contents.length - 1}
         onClick={() => {
+          updateHasSeenIntro();
           const nextStep = getNextStepPath("intro");
           navigate({
             to: nextStep,

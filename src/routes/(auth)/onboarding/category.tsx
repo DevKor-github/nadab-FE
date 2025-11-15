@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
 import {
   BarChartSquareFilledIcon,
@@ -9,12 +9,21 @@ import {
 import StepTitle from "@/features/auth/StepTitle";
 import clsx from "clsx";
 import { useState } from "react";
+import useSignupStore from "@/store/signupStore";
 
 export const Route = createFileRoute("/(auth)/onboarding/category")({
   component: Category,
+  beforeLoad: () => {
+    // 이전 단계 건너뛰는 것 방지
+    const { hasSeenIntro } = useSignupStore.getState();
+    if (!hasSeenIntro) {
+      throw redirect({ to: "/signup/terms" });
+    }
+  },
 });
 
 function Category() {
+  const updateCategory = useSignupStore.use.updateCategory();
   const initialItems = [
     {
       icon: <BarChartSquareFilledIcon />,
@@ -38,6 +47,7 @@ function Category() {
     },
   ];
   const [items, setItems] = useState(initialItems);
+  const selectedItem = items.find((item) => item.isSelected);
 
   return (
     // Todo: 버튼 밑으로 내리는 거 상위 컴포넌트에서 해주기
@@ -88,7 +98,13 @@ function Category() {
           })}
         </ul>
       </div>
-      <BlockButton>다음</BlockButton>
+      <BlockButton
+        onClick={() => {
+          updateCategory(selectedItem!.title);
+        }}
+      >
+        다음
+      </BlockButton>
     </div>
   );
 }

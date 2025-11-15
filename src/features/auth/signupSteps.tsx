@@ -24,7 +24,7 @@ export const signupSteps = [
   {
     id: "intro",
     path: "/onboarding/intro",
-    header: <SubHeader>인트로</SubHeader>,
+    header: null,
   },
   {
     id: "category",

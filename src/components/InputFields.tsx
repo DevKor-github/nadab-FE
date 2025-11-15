@@ -3,7 +3,6 @@ import {
   useState,
   useRef,
   type InputHTMLAttributes,
-  type Ref,
   type ChangeEvent,
   type KeyboardEvent,
 } from "react";
@@ -14,7 +13,6 @@ type Props = {
   id?: string;
   label?: string;
   error?: string;
-  ref?: Ref<HTMLInputElement>;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export default function InputField({
@@ -22,7 +20,6 @@ export default function InputField({
   id,
   label,
   error,
-  ref,
   ...props
 }: Props) {
   return (
@@ -33,17 +30,80 @@ export default function InputField({
         </label>
       )}
       <input
-        ref={ref}
         id={id}
         {...props}
         className={clsx(
-          "w-ful rounded-lg text-caption-m text-field-text-default bg-field-bg-default border border-border-base placeholder:text-text-disabled  px-padding-x-xs py-padding-y-s focus:outline-none focus:shadow-1 focus:border-border-layer-1",
+          "w-full rounded-lg text-caption-m text-field-text-default bg-field-bg-default border border-border-base placeholder:text-text-disabled  px-padding-x-xs py-padding-y-s focus:outline-none focus:shadow-1 focus:border-border-layer-1",
           {
             "border-border-base": variant === "basic" && !error,
           },
           error && "text-feedback-error-fg! border-feedback-error-fg!"
         )}
       />
+      {error && (
+        <p className="text-feedback-error-fg text-caption-s">{error}</p>
+      )}
+    </div>
+  );
+}
+
+export function InputFieldWithButton({
+  id,
+  label,
+  error,
+  buttonLabel,
+  buttonDisabled,
+  onButtonClick,
+  ...props
+}: Props & {
+  buttonLabel: string;
+  onButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  buttonDisabled?: boolean;
+}) {
+  return (
+    <div className="flex flex-col gap-gap-y-s">
+      {label && (
+        <label className="text-label-s text-field-text-mute" htmlFor={id}>
+          {label}
+        </label>
+      )}
+      <div
+        className={clsx(
+          "relative rounded-lg border overflow-hidden focus-within:shadow-1 focus-within:border-border-layer-1",
+          {
+            "border-border-base": !error,
+            "border-feedback-error-fg!": error,
+          }
+        )}
+      >
+        <input
+          id={id}
+          {...props}
+          className={clsx(
+            "w-full text-caption-m text-field-text-default bg-field-bg-default placeholder:text-text-disabled px-padding-x-xs py-padding-y-s focus:outline-none",
+
+            error && "text-feedback-error-fg"
+          )}
+        />
+        <button
+          className={clsx(
+            "absolute right-0 h-full px-padding-x-s text-button-3",
+            {
+              "bg-button-primary-bg-default text-field-text-inverse hover:bg-button-primary-bg-hover":
+                !buttonDisabled,
+              "bg-button-disabled-bg text-text-disabled": buttonDisabled,
+            }
+          )}
+          disabled={buttonDisabled}
+          onClick={(e) => {
+            e.currentTarget.blur();
+            onButtonClick(e);
+          }}
+        >
+          {buttonLabel}
+        </button>
+      </div>
+
       {error && (
         <p className="text-feedback-error-fg text-caption-s">{error}</p>
       )}

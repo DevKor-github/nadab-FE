@@ -52,7 +52,6 @@ function Category() {
   const navigate = useNavigate();
 
   return (
-    // Todo: 버튼 밑으로 내리는 거 상위 컴포넌트에서 해주기
     <div className="h-full flex flex-col">
       <div className="flex-1 flex flex-col gap-padding-y-m">
         <div className="my-margin-y-m flex flex-col gap-margin-y-m">
@@ -88,8 +87,10 @@ function Category() {
                 className={clsx(
                   "py-padding-y-l px-padding-x-l flex items-center gap-gap-x-m border rounded-xl cursor-pointer",
                   {
-                    "border-neutral-200": !item.isSelected,
-                    "border-brand-primary": item.isSelected,
+                    "border-neutral-200 hover:bg-interactive-bg-hover hover:border-interactive-border-hover":
+                      !item.isSelected,
+                    "border-brand-primary bg-interactive-bg-muted":
+                      item.isSelected,
                   }
                 )}
               >

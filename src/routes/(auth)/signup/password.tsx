@@ -4,7 +4,7 @@ import useSignupStore from "@/store/signupStore";
 import { useState } from "react";
 import { UserSchema } from "@/features/user/userSchema";
 import { useDebouncedCallback } from "use-debounce";
-import InputField from "@/components/InputField";
+import InputField from "@/components/InputFields";
 import { useNavigate } from "@tanstack/react-router";
 import StepTitle from "@/features/auth/StepTitle";
 import { getNextStepPath } from "@/features/auth/signupSteps";

@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
 import useSignupStore from "@/store/signupStore";
 import { useEffect, useRef, useState } from "react";
-import { OtpInput } from "@/components/InputField";
+import { OtpInput } from "@/components/InputFields";
 import { useNavigate } from "@tanstack/react-router";
 import StepTitle from "@/features/auth/StepTitle";
 import { getNextStepPath } from "@/features/auth/signupSteps";

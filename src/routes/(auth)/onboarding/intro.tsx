@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { useRef, useState } from "react";
@@ -11,8 +12,13 @@ import BlockButton from "@/components/BlockButton";
 import { LeftCarousel, RightCarousel } from "@/components/Carousels";
 import clsx from "clsx";
 import { useNavigate } from "@tanstack/react-router";
+import { getNextStepPath } from "@/features/auth/signupSteps";
 
-export default function FeatureDescription() {
+export const Route = createFileRoute("/(auth)/onboarding/intro")({
+  component: FeatureDescription,
+});
+
+function FeatureDescription() {
   const contents = [
     {
       category: "오늘의 질문",
@@ -137,11 +143,9 @@ export default function FeatureDescription() {
       <BlockButton
         disabled={activeIndex !== contents.length - 1}
         onClick={() => {
+          const nextStep = getNextStepPath("intro");
           navigate({
-            to: "/signup",
-            search: {
-              step: "category",
-            },
+            to: nextStep,
           });
         }}
       >

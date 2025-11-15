@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
 import clsx from "clsx";
 import { useState } from "react";
-import StepTitle from "@/components/StepTitle";
+import StepTitle from "@/features/auth/StepTitle";
 import {
   AgreementCheckboxIcon,
   SelectAllCheckboxIcon,

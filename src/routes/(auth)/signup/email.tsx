@@ -5,7 +5,7 @@ import { UserSchema } from "@/features/user/userSchema";
 import { useDebouncedCallback } from "use-debounce";
 import InputField from "@/components/InputField";
 import { useNavigate } from "@tanstack/react-router";
-import StepTitle from "@/components/StepTitle";
+import StepTitle from "@/features/auth/StepTitle";
 import { getNextStepPath } from "@/features/auth/signupSteps";
 
 export const Route = createFileRoute("/(auth)/signup/email")({

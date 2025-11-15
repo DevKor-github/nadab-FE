@@ -21,6 +21,16 @@ export const signupSteps = [
     path: "/signup/password",
     header: <SubHeader>비밀번호 설정</SubHeader>,
   },
+  {
+    id: "intro",
+    path: "/onboarding/intro",
+    header: <SubHeader>인트로</SubHeader>,
+  },
+  {
+    id: "category",
+    path: "/onboarding/category",
+    header: <SubHeader>카테고리</SubHeader>,
+  },
 ] as const;
 
 export type StepId = (typeof signupSteps)[number]["id"];

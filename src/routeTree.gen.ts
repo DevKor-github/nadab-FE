@@ -11,11 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
+import { Route as authOnboardingRouteImport } from './routes/(auth)/onboarding'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authSignupTermsRouteImport } from './routes/(auth)/signup/terms'
 import { Route as authSignupPasswordRouteImport } from './routes/(auth)/signup/password'
 import { Route as authSignupEmailVerificationRouteImport } from './routes/(auth)/signup/emailVerification'
 import { Route as authSignupEmailRouteImport } from './routes/(auth)/signup/email'
+import { Route as authOnboardingIntroRouteImport } from './routes/(auth)/onboarding/intro'
+import { Route as authOnboardingCategoryRouteImport } from './routes/(auth)/onboarding/category'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -25,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const authSignupRoute = authSignupRouteImport.update({
   id: '/(auth)/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authOnboardingRoute = authOnboardingRouteImport.update({
+  id: '/(auth)/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authLoginRoute = authLoginRouteImport.update({
@@ -53,11 +61,24 @@ const authSignupEmailRoute = authSignupEmailRouteImport.update({
   path: '/email',
   getParentRoute: () => authSignupRoute,
 } as any)
+const authOnboardingIntroRoute = authOnboardingIntroRouteImport.update({
+  id: '/intro',
+  path: '/intro',
+  getParentRoute: () => authOnboardingRoute,
+} as any)
+const authOnboardingCategoryRoute = authOnboardingCategoryRouteImport.update({
+  id: '/category',
+  path: '/category',
+  getParentRoute: () => authOnboardingRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
+  '/onboarding': typeof authOnboardingRouteWithChildren
   '/signup': typeof authSignupRouteWithChildren
+  '/onboarding/category': typeof authOnboardingCategoryRoute
+  '/onboarding/intro': typeof authOnboardingIntroRoute
   '/signup/email': typeof authSignupEmailRoute
   '/signup/emailVerification': typeof authSignupEmailVerificationRoute
   '/signup/password': typeof authSignupPasswordRoute
@@ -66,7 +87,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
+  '/onboarding': typeof authOnboardingRouteWithChildren
   '/signup': typeof authSignupRouteWithChildren
+  '/onboarding/category': typeof authOnboardingCategoryRoute
+  '/onboarding/intro': typeof authOnboardingIntroRoute
   '/signup/email': typeof authSignupEmailRoute
   '/signup/emailVerification': typeof authSignupEmailVerificationRoute
   '/signup/password': typeof authSignupPasswordRoute
@@ -76,7 +100,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(auth)/login': typeof authLoginRoute
+  '/(auth)/onboarding': typeof authOnboardingRouteWithChildren
   '/(auth)/signup': typeof authSignupRouteWithChildren
+  '/(auth)/onboarding/category': typeof authOnboardingCategoryRoute
+  '/(auth)/onboarding/intro': typeof authOnboardingIntroRoute
   '/(auth)/signup/email': typeof authSignupEmailRoute
   '/(auth)/signup/emailVerification': typeof authSignupEmailVerificationRoute
   '/(auth)/signup/password': typeof authSignupPasswordRoute
@@ -87,7 +114,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/onboarding'
     | '/signup'
+    | '/onboarding/category'
+    | '/onboarding/intro'
     | '/signup/email'
     | '/signup/emailVerification'
     | '/signup/password'
@@ -96,7 +126,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/onboarding'
     | '/signup'
+    | '/onboarding/category'
+    | '/onboarding/intro'
     | '/signup/email'
     | '/signup/emailVerification'
     | '/signup/password'
@@ -105,7 +138,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/(auth)/login'
+    | '/(auth)/onboarding'
     | '/(auth)/signup'
+    | '/(auth)/onboarding/category'
+    | '/(auth)/onboarding/intro'
     | '/(auth)/signup/email'
     | '/(auth)/signup/emailVerification'
     | '/(auth)/signup/password'
@@ -115,6 +151,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authLoginRoute: typeof authLoginRoute
+  authOnboardingRoute: typeof authOnboardingRouteWithChildren
   authSignupRoute: typeof authSignupRouteWithChildren
 }
 
@@ -132,6 +169,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof authSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/onboarding': {
+      id: '/(auth)/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof authOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/login': {
@@ -169,8 +213,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authSignupEmailRouteImport
       parentRoute: typeof authSignupRoute
     }
+    '/(auth)/onboarding/intro': {
+      id: '/(auth)/onboarding/intro'
+      path: '/intro'
+      fullPath: '/onboarding/intro'
+      preLoaderRoute: typeof authOnboardingIntroRouteImport
+      parentRoute: typeof authOnboardingRoute
+    }
+    '/(auth)/onboarding/category': {
+      id: '/(auth)/onboarding/category'
+      path: '/category'
+      fullPath: '/onboarding/category'
+      preLoaderRoute: typeof authOnboardingCategoryRouteImport
+      parentRoute: typeof authOnboardingRoute
+    }
   }
 }
+
+interface authOnboardingRouteChildren {
+  authOnboardingCategoryRoute: typeof authOnboardingCategoryRoute
+  authOnboardingIntroRoute: typeof authOnboardingIntroRoute
+}
+
+const authOnboardingRouteChildren: authOnboardingRouteChildren = {
+  authOnboardingCategoryRoute: authOnboardingCategoryRoute,
+  authOnboardingIntroRoute: authOnboardingIntroRoute,
+}
+
+const authOnboardingRouteWithChildren = authOnboardingRoute._addFileChildren(
+  authOnboardingRouteChildren,
+)
 
 interface authSignupRouteChildren {
   authSignupEmailRoute: typeof authSignupEmailRoute
@@ -193,6 +265,7 @@ const authSignupRouteWithChildren = authSignupRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authLoginRoute: authLoginRoute,
+  authOnboardingRoute: authOnboardingRouteWithChildren,
   authSignupRoute: authSignupRouteWithChildren,
 }
 export const routeTree = rootRouteImport

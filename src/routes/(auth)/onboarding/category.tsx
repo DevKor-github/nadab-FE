@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
 import {
   BarChartSquareFilledIcon,
@@ -5,11 +6,15 @@ import {
   SignAltFilledIcon,
   UsersFilledIcon,
 } from "@/components/Icons";
-import StepTitle from "@/components/StepTitle";
+import StepTitle from "@/features/auth/StepTitle";
 import clsx from "clsx";
 import { useState } from "react";
 
-export default function Category() {
+export const Route = createFileRoute("/(auth)/onboarding/category")({
+  component: Category,
+});
+
+function Category() {
   const initialItems = [
     {
       icon: <BarChartSquareFilledIcon />,

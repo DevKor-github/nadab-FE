@@ -1,6 +1,7 @@
-export function ColoredMainLogo() {
+export function ColoredMainLogo({ style }: { style: React.CSSProperties }) {
   return (
     <svg
+      style={style}
       width="116"
       height="180"
       viewBox="0 0 116 180"
@@ -28,9 +29,10 @@ export function ColoredMainLogo() {
   );
 }
 
-export function ColoredTextLogo() {
+export function ColoredTextLogo({ style }: { style: React.CSSProperties }) {
   return (
     <svg
+      style={style}
       width="76"
       height="36"
       viewBox="0 0 76 36"

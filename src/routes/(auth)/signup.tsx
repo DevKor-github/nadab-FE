@@ -22,7 +22,7 @@ function SignupLayout() {
     <div className="h-full flex flex-col">
       {currentStep.header}
       <AnimatePresence mode="wait" initial={false}>
-        <AnimatedOutlet key={currentStep.id} />
+        <AnimatedOutlet key={location.pathname} />
       </AnimatePresence>
     </div>
   );

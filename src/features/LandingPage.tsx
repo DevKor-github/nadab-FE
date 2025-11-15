@@ -11,9 +11,9 @@ export function LandingPage() {
     <div className="w-full h-full flex flex-col items-center pt-padding-y-m">
       {/* 위 절반 */}
       <div className="flex-1 flex flex-col justify-center items-center">
-        <ColoredMainLogo />
+        <ColoredMainLogo style={{ height: `${(180 / 796) * 100}dvh` }} />
         <div className="mt-margin-y-l mb-margin-y-s">
-          <ColoredTextLogo />
+          <ColoredTextLogo style={{ height: `${(36 / 796) * 100}dvh` }} />
         </div>
         <p className="text-label-m text-brand-primary-alpha-60">
           나에게 답하다

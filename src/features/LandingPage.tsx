@@ -55,7 +55,7 @@ export function LandingPage() {
             <span className="text-text-disabled text-caption-m">또는</span>
             <hr className="flex-1 border-t border-border-layer-1" />
           </div>
-          <Link to="/signup">
+          <Link to="/signup/terms">
             <BlockButton>회원가입</BlockButton>
           </Link>
           <p className="text-center text-label-s text-text-tertiary">

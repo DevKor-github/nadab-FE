@@ -16,7 +16,7 @@ function OnboardingLayout() {
     <div className="h-full flex flex-col">
       {currentStep.header}
       <AnimatePresence mode="wait">
-        <AnimatedOutlet key={location.pathname} />
+        <AnimatedOutlet key={currentStep.id} />
       </AnimatePresence>
     </div>
   );

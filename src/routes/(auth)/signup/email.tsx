@@ -40,6 +40,10 @@ export default function Email() {
           e.preventDefault();
           if (!emailError) {
             // Todo: 중복 확인 api 호출 + 로딩 상태 UI 반영
+            // 모바일 페이지 전환 애니메이션 관련 이슈로 인해 추가
+            if (document.activeElement instanceof HTMLElement) {
+              document.activeElement.blur();
+            }
             const nextStep = getNextStepPath("email");
             navigate({
               to: nextStep,

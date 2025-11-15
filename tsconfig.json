@@ -6,6 +6,11 @@
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
+    "plugins": [
+      {
+        "name": "@tanstack/router-plugin"
+      }
+    ],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

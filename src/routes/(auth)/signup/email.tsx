@@ -1,14 +1,18 @@
+import { createFileRoute } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
-import useSignupStore from "@/store/signupStore";
 import { useState } from "react";
 import { UserSchema } from "@/features/user/userSchema";
 import { useDebouncedCallback } from "use-debounce";
 import InputField from "@/components/InputField";
 import { useNavigate } from "@tanstack/react-router";
 import StepTitle from "@/components/StepTitle";
+import { getNextStepPath } from "@/features/auth/signupSteps";
+
+export const Route = createFileRoute("/(auth)/signup/email")({
+  component: Email,
+});
 
 export default function Email() {
-  const updateEmail = useSignupStore.use.updateEmail();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
@@ -36,13 +40,10 @@ export default function Email() {
           e.preventDefault();
           if (!emailError) {
             // Todo: 중복 확인 api 호출 + 로딩 상태 UI 반영
+            const nextStep = getNextStepPath("email");
             navigate({
-              to: "/signup",
-              search: {
-                step: "emailVerification",
-              },
+              to: nextStep,
             });
-            updateEmail(email);
           }
         }}
       >

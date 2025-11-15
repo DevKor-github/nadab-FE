@@ -1,6 +1,5 @@
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import BlockButton from "@/components/BlockButton";
-import { Link } from "@tanstack/react-router";
-import useSignupStore from "@/store/signupStore";
 import clsx from "clsx";
 import { useState } from "react";
 import StepTitle from "@/components/StepTitle";
@@ -8,9 +7,13 @@ import {
   AgreementCheckboxIcon,
   SelectAllCheckboxIcon,
 } from "@/components/Icons";
+import { getNextStepPath } from "@/features/auth/signupSteps";
 
-export default function Terms() {
-  // Todo: 약관 링크 변경
+export const Route = createFileRoute("/(auth)/signup/terms")({
+  component: Terms,
+});
+
+function Terms() {
   const initialItems = [
     {
       isRequired: true,
@@ -68,7 +71,8 @@ export default function Terms() {
       return true;
     }
   });
-  const updateIsTermsAgreed = useSignupStore.use.updateIsTermsAgreed();
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className="my-margin-y-m">
@@ -134,17 +138,17 @@ export default function Terms() {
             );
           })}
         </ul>
-        {isAllRequiredAgreed ? (
-          <Link
-            to="/signup"
-            search={{ step: "email" }}
-            onClick={updateIsTermsAgreed}
-          >
-            <BlockButton>완료</BlockButton>
-          </Link>
-        ) : (
-          <BlockButton disabled>완료</BlockButton>
-        )}
+
+        <BlockButton
+          disabled={!isAllRequiredAgreed}
+          onClick={() => {
+            const nextStep = getNextStepPath("terms");
+            navigate({ to: nextStep });
+          }}
+        >
+          완료
+        </BlockButton>
+
         {/* eslint-disable react/no-unescaped-entities */}
         <div className="flex flex-col gap-gap-y-s">
           <p className="text-label-s text-center text-text-tertiary">

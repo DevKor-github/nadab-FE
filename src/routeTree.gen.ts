@@ -12,6 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as authSignupTermsRouteImport } from './routes/(auth)/signup/terms'
+import { Route as authSignupPasswordRouteImport } from './routes/(auth)/signup/password'
+import { Route as authSignupEmailVerificationRouteImport } from './routes/(auth)/signup/emailVerification'
+import { Route as authSignupEmailRouteImport } from './routes/(auth)/signup/email'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +32,90 @@ const authLoginRoute = authLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authSignupTermsRoute = authSignupTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => authSignupRoute,
+} as any)
+const authSignupPasswordRoute = authSignupPasswordRouteImport.update({
+  id: '/password',
+  path: '/password',
+  getParentRoute: () => authSignupRoute,
+} as any)
+const authSignupEmailVerificationRoute =
+  authSignupEmailVerificationRouteImport.update({
+    id: '/emailVerification',
+    path: '/emailVerification',
+    getParentRoute: () => authSignupRoute,
+  } as any)
+const authSignupEmailRoute = authSignupEmailRouteImport.update({
+  id: '/email',
+  path: '/email',
+  getParentRoute: () => authSignupRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
-  '/signup': typeof authSignupRoute
+  '/signup': typeof authSignupRouteWithChildren
+  '/signup/email': typeof authSignupEmailRoute
+  '/signup/emailVerification': typeof authSignupEmailVerificationRoute
+  '/signup/password': typeof authSignupPasswordRoute
+  '/signup/terms': typeof authSignupTermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
-  '/signup': typeof authSignupRoute
+  '/signup': typeof authSignupRouteWithChildren
+  '/signup/email': typeof authSignupEmailRoute
+  '/signup/emailVerification': typeof authSignupEmailVerificationRoute
+  '/signup/password': typeof authSignupPasswordRoute
+  '/signup/terms': typeof authSignupTermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(auth)/login': typeof authLoginRoute
-  '/(auth)/signup': typeof authSignupRoute
+  '/(auth)/signup': typeof authSignupRouteWithChildren
+  '/(auth)/signup/email': typeof authSignupEmailRoute
+  '/(auth)/signup/emailVerification': typeof authSignupEmailVerificationRoute
+  '/(auth)/signup/password': typeof authSignupPasswordRoute
+  '/(auth)/signup/terms': typeof authSignupTermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/signup/email'
+    | '/signup/emailVerification'
+    | '/signup/password'
+    | '/signup/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup'
-  id: '__root__' | '/' | '/(auth)/login' | '/(auth)/signup'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/signup/email'
+    | '/signup/emailVerification'
+    | '/signup/password'
+    | '/signup/terms'
+  id:
+    | '__root__'
+    | '/'
+    | '/(auth)/login'
+    | '/(auth)/signup'
+    | '/(auth)/signup/email'
+    | '/(auth)/signup/emailVerification'
+    | '/(auth)/signup/password'
+    | '/(auth)/signup/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authLoginRoute: typeof authLoginRoute
-  authSignupRoute: typeof authSignupRoute
+  authSignupRoute: typeof authSignupRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -82,13 +141,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/signup/terms': {
+      id: '/(auth)/signup/terms'
+      path: '/terms'
+      fullPath: '/signup/terms'
+      preLoaderRoute: typeof authSignupTermsRouteImport
+      parentRoute: typeof authSignupRoute
+    }
+    '/(auth)/signup/password': {
+      id: '/(auth)/signup/password'
+      path: '/password'
+      fullPath: '/signup/password'
+      preLoaderRoute: typeof authSignupPasswordRouteImport
+      parentRoute: typeof authSignupRoute
+    }
+    '/(auth)/signup/emailVerification': {
+      id: '/(auth)/signup/emailVerification'
+      path: '/emailVerification'
+      fullPath: '/signup/emailVerification'
+      preLoaderRoute: typeof authSignupEmailVerificationRouteImport
+      parentRoute: typeof authSignupRoute
+    }
+    '/(auth)/signup/email': {
+      id: '/(auth)/signup/email'
+      path: '/email'
+      fullPath: '/signup/email'
+      preLoaderRoute: typeof authSignupEmailRouteImport
+      parentRoute: typeof authSignupRoute
+    }
   }
 }
+
+interface authSignupRouteChildren {
+  authSignupEmailRoute: typeof authSignupEmailRoute
+  authSignupEmailVerificationRoute: typeof authSignupEmailVerificationRoute
+  authSignupPasswordRoute: typeof authSignupPasswordRoute
+  authSignupTermsRoute: typeof authSignupTermsRoute
+}
+
+const authSignupRouteChildren: authSignupRouteChildren = {
+  authSignupEmailRoute: authSignupEmailRoute,
+  authSignupEmailVerificationRoute: authSignupEmailVerificationRoute,
+  authSignupPasswordRoute: authSignupPasswordRoute,
+  authSignupTermsRoute: authSignupTermsRoute,
+}
+
+const authSignupRouteWithChildren = authSignupRoute._addFileChildren(
+  authSignupRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authLoginRoute: authLoginRoute,
-  authSignupRoute: authSignupRoute,
+  authSignupRoute: authSignupRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

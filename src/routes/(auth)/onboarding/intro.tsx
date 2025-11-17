@@ -161,9 +161,11 @@ function FeatureDescription() {
           }
           updateHasSeenIntro();
           const nextStep = getNextStepPath("intro");
-          navigate({
-            to: nextStep,
-          });
+          setTimeout(() => {
+            navigate({
+              to: nextStep,
+            });
+          }, 20);
         }}
       >
         시작하기

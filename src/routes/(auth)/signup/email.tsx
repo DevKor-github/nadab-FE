@@ -57,11 +57,9 @@ export default function Email() {
             const nextStep = getNextStepPath("email");
             // 모바일 freeze 이슈때문에 넣음
             // 더 나은 해결방법 나올 때까지 지우지 말 것
-            setTimeout(() => {
-              navigate({
-                to: nextStep,
-              });
-            }, 20);
+            Promise.resolve().then(() => {
+              navigate({ to: nextStep });
+            });
           }
         }}
       >

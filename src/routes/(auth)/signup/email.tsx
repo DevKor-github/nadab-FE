@@ -30,6 +30,10 @@ export default function Email() {
 
   const emailMutation = useMutation({
     mutationFn: async ({ email }: { email: string }) => {
+      // 모바일 freeze 이슈로 인해 추가
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
       // Todo: 중복 확인 백엔드 api 연동
       await new Promise((resolve) => setTimeout(resolve, 300));
       alert(email + "로 인증번호 발송: 123456");

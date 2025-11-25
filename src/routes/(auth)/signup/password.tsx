@@ -8,6 +8,8 @@ import {
   useInputValidation,
   useConfirmPasswordValidation,
 } from "@/hooks/useInputValidation";
+import { useEffect } from "react";
+import { useRouter } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(auth)/signup/password")({
   component: Password,
@@ -34,6 +36,15 @@ export default function Password() {
     validate: validateConfirmPassword,
   } = useConfirmPasswordValidation(password);
   const navigate = useNavigate();
+  const nextStep = getNextStepPath("password");
+  const router = useRouter();
+
+  // 다음 스탭이 로딩 오래 결려서, preload
+  useEffect(() => {
+    if (!passwordError && !confirmPasswordError) {
+      router.preloadRoute({ to: nextStep });
+    }
+  }, [nextStep, router, passwordError, confirmPasswordError]);
 
   return (
     <div>
@@ -47,7 +58,6 @@ export default function Password() {
           e.preventDefault();
           if (!passwordError && !confirmPasswordError) {
             updatePassword(password);
-            const nextStep = getNextStepPath("password");
             navigate({
               to: nextStep,
             });

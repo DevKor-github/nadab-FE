@@ -40,11 +40,11 @@ export default function Password() {
   const router = useRouter();
 
   // 다음 스탭이 로딩 오래 결려서, preload
+  // 유지시간 - 기본값 30초!!
   useEffect(() => {
-    if (!passwordError && !confirmPasswordError) {
       router.preloadRoute({ to: nextStep });
-    }
-  }, [nextStep, router, passwordError, confirmPasswordError]);
+
+  }, [nextStep, router]);
 
   return (
     <div>

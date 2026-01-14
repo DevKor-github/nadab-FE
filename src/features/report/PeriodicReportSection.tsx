@@ -3,66 +3,128 @@ import BlockButton from "@/components/BlockButton";
 import { InfoIcon, LoadingSpinnerIcon } from "@/components/Icons";
 import { api } from "@/lib/axios";
 import type { ApiResponse, ApiErrResponse } from "@/generated/api";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type { components } from "@/generated/api-types";
 import { AxiosError } from "axios";
 import { crystalsOptions } from "../user/quries";
-import { useGenerateWeeklyReportMutation } from "./useGenerateWeeklyReportMutation";
 import { getPreviousPeriodText } from "@/lib/getPrevPeriod";
 import { useState } from "react";
 import { Popover } from "@/components/Popover";
 import { useDeleteWeeklyReportMutation } from "./useDeleteWeeklyReportMutation";
-// import Toast from "@/components/Toast";
+import useErrorStore from "@/store/errorStore";
 
+type generateWeeklyReportRes =
+  components["schemas"]["WeeklyReportStartResponse"];
+type weeklyReportsRes = components["schemas"]["MyWeeklyReportResponse"];
 type weeklyReportRes = components["schemas"]["WeeklyReportResponse"];
 
-export function PeriodicReport() {
-  const { data: crystalBalance } = useQuery(crystalsOptions);
+function useWeeklyReport() {
+  const queryClient = useQueryClient();
+  const [weeklyReportId, setWeeklyReportId] = useState<number | null>(() => {
+    const saved = localStorage.getItem("weeklyReportId");
+    return saved ? Number(saved) : null;
+  });
+
+  // 주간 레포트 조회
   const {
-    data: weeklyReport,
-    error: weeklyReportErr,
-    isLoading: isWeeklyReportLoading,
-  } = useQuery<weeklyReportRes, AxiosError<ApiErrResponse<null>>>({
+    data: weeklyReports,
+    // error: weeklyReportsErr,
+    isFetching: isWeeklyReportsFetching,
+  } = useQuery({
     queryKey: ["currentUser", "weeklyReport"],
     queryFn: async () => {
-      // 주간 레포트 조회
-      const res = await api.get<ApiResponse<weeklyReportRes>>(
+      const res = await api.get<ApiResponse<weeklyReportsRes>>(
         "/api/v1/weekly-report"
       );
       return res.data.data!;
     },
-    retry: (_, error) => {
-      if (
-        error.response?.data?.code === "USER_NOT_FOUND" ||
-        error.response?.data?.code === "WEEKLY_REPORT_NOT_FOUND"
-      )
-        return false;
-      return true;
+  });
+
+  // 주간 레포트 생성 중이라면 폴링
+  const {
+    data: weeklyReport,
+    // error: weeklyReportErr,
+    // isFetching: isWeeklyReportFetching,
+  } = useQuery<weeklyReportRes, AxiosError<ApiErrResponse<null>>>({
+    queryKey: ["currentUser", "weeklyReport", weeklyReportId],
+    queryFn: async () => {
+      // 주간 레포트 조회
+      const res = await api.get<ApiResponse<weeklyReportRes>>(
+        `/api/v1/weekly-report/${weeklyReportId}`
+      );
+      return res.data.data!;
     },
-    // 레포트 생성 중일 경우 0.5초 간격으로 폴링
     refetchInterval: (query) => {
-      const error = query.state.error as AxiosError<ApiErrResponse<null>>;
-      if (error?.response?.data?.code === "WEEKLY_REPORT_NOT_COMPLETED") {
-        return 500;
+      const status = query.state.data?.status;
+      if (status === "COMPLETED" || status === "FAILED") {
+        localStorage.removeItem("weeklyReportId");
+        setWeeklyReportId(null);
+        return false;
       }
+      return 1000; // 1초마다 폴링
+    },
+    enabled: !!weeklyReportId,
+  });
 
-      return false;
+  // 생성 뮤테이션
+  const generateWeeklyReportMutation = useMutation({
+    mutationFn: async () => {
+      const startRes = await api.post<ApiResponse<generateWeeklyReportRes>>(
+        "/api/v1/weekly-report/start"
+      );
+      const { reportId } = startRes.data.data!;
+      localStorage.setItem("weeklyReportId", String(reportId));
+      setWeeklyReportId(reportId!);
+      return reportId;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentUser", "crystals"] });
+    },
+    onError: (err: AxiosError<ApiErrResponse<null>>) => {
+      if (err.response?.data?.code === "WEEKLY_REPORT_NOT_ENOUGH_REPORTS") {
+        useErrorStore
+          .getState()
+          .showError(
+            "지난주 분석이 완성되지 못했어요.",
+            "이번주 기록을 열심히 작성해서\n다음 분석을 완성해봐요."
+          );
+      } else {
+        useErrorStore.getState().showError(
+          // Todo: 에러 메시지 변경
+          err.response?.data?.code ?? "",
+          err.response?.data?.message ??
+            "알 수 없는 에러가 발생했습니다. 다시 시도해 주세요."
+        );
+      }
     },
   });
-  console.log(weeklyReport);
 
-  // const [isToastOpen, setIsToastOpen] = useState(false);
-  // const [toastMessage, setToastMessage] = useState("");
+  return {
+    generateWeeklyReportMutation,
+    weeklyReport:
+      weeklyReports?.report?.status === "COMPLETED"
+        ? weeklyReports?.report
+        : weeklyReport?.status === "COMPLETED"
+        ? weeklyReport
+        : undefined,
+    pervWeeklyReport: weeklyReports?.previousReport,
+    isWeeklyReportLoading: isWeeklyReportsFetching,
+    isWeeklyReportGenerating:
+      weeklyReport?.status === "PENDING" ||
+      weeklyReport?.status === "IN_PROGRESS",
+  };
+}
 
-  const generateWeeklyReportMutation = useGenerateWeeklyReportMutation({
-    // onSuccess: () => {
-    //   setIsToastOpen(true);
-    //   setToastMessage("30 크리스탈이 소진되었어요.");
-    // },
-  });
-  const isGenerating =
-    generateWeeklyReportMutation.isPending ||
-    weeklyReportErr?.response?.data.code === "WEEKLY_REPORT_NOT_COMPLETED";
+export function PeriodicReport() {
+  const { data: crystalBalance } = useQuery(crystalsOptions);
+  const {
+    generateWeeklyReportMutation,
+    weeklyReport,
+    pervWeeklyReport,
+    isWeeklyReportLoading,
+    isWeeklyReportGenerating,
+  } = useWeeklyReport();
+
   const deleteWeeklyReportMutation = useDeleteWeeklyReportMutation();
   return (
     <>
@@ -77,7 +139,7 @@ export function PeriodicReport() {
             reportType="weekly"
             report={weeklyReport}
             onGenerate={() => generateWeeklyReportMutation.mutate()}
-            isGenerating={isGenerating}
+            isGenerating={isWeeklyReportGenerating}
             cost={20}
             crystalBalance={crystalBalance?.crystalBalance ?? 0}
           />
@@ -95,11 +157,6 @@ export function PeriodicReport() {
           />
         )}
       </div>
-      {/* <Toast
-        isOpen={isToastOpen}
-        onClose={() => setIsToastOpen(false)}
-        message={toastMessage}
-      /> */}
     </>
   );
 }

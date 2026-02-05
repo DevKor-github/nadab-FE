@@ -4,6 +4,7 @@ import useThemeStore from "@/store/useThemeStore";
 import { useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Modal from "@/components/Modal";
+import ErrorPage from "@/components/Error";
 
 type RouterContext = {
   queryClient: QueryClient;
@@ -11,6 +12,7 @@ type RouterContext = {
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
+  errorComponent: ErrorPage,
 });
 
 function RootComponent() {

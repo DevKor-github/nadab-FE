@@ -12,6 +12,12 @@ const config: CapacitorConfig = {
     CapacitorHttp: {
       enabled: true,
     },
+    SplashScreen: {
+      launchAutoHide: false,
+      // androidScaleType: "CENTER_CROP",
+      // splashFullScreen: true,
+      // splashImmersive: true,
+    },
   },
 };
 

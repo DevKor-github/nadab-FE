@@ -9,6 +9,7 @@ import ErrorPage from "@/components/ErrorPage";
 import { Capacitor, SystemBars, SystemBarsStyle } from "@capacitor/core";
 import { StatusBar } from "@capacitor/status-bar";
 import { BackButtonHandler } from "@/hooks/backButtonHandler";
+import { SplashScreen } from "@capacitor/splash-screen";
 
 type RouterContext = {
   queryClient: QueryClient;
@@ -46,7 +47,14 @@ function RootComponent() {
           color: isDarkMode ? "#000000" : "#FFFFFF",
         });
       }
+      async function hideSplash() {
+        // 모든 준비가 끝났을 때 스플래시 숨기기
+        if (Capacitor.isNativePlatform()) {
+          await SplashScreen.hide();
+        }
+      }
       syncSystemBars();
+      hideSplash();
     }
   }, [isDarkMode]);
 

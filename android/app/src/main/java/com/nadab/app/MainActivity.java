@@ -9,10 +9,35 @@ import androidx.core.view.WindowInsetsCompat;
 import com.getcapacitor.BridgeActivity;
 import android.graphics.Color;
 import android.os.Build;
+import android.content.Context;
+import android.content.SharedPreferences;
+import org.json.JSONObject; // JSON 파싱용
+import android.util.Log; // 로그 확인용
 
 public class MainActivity extends BridgeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = getSharedPreferences("CapacitorStorage", Context.MODE_PRIVATE);
+
+        String themeJson = prefs.getString("theme-storage", "");
+        Log.d("SplashDebug", "Stored Theme JSON: " + themeJson);
+        boolean isDarkMode = false;
+
+        try {
+            if (!themeJson.isEmpty()) {
+                JSONObject json = new JSONObject(themeJson);
+                isDarkMode = json.getJSONObject("state").getBoolean("isDarkMode");
+            }
+        } catch (Exception e) {
+            Log.e("SplashDebug", "JSON Parsing Error", e);
+        }
+        Log.d("SplashDebug", "Final isDarkMode: " + isDarkMode);
+        if (isDarkMode) {
+            setTheme(R.style.AppTheme_NoActionBar_Launch_Dark);
+        } else {
+            setTheme(R.style.AppTheme_NoActionBar_Launch);
+        }
+
         super.onCreate(savedInstanceState);
 
         // 1. 엣지 투 엣지(전체화면) 설정을 명시적으로 선언
